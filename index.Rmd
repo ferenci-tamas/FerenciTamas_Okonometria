@@ -8,8 +8,8 @@ documentclass: book
 link-citations: yes
 description: "Az ökonometria a társadalmi-gazdasági jelenségek kvantitatív, empirikus vizsgálatának, modellezésének tudománya. A jegyzet ezt tárgyalja, kerülve a mély matematikai részleteket, a hangsúlyt inkább a módszerek sokféleségének bemutatására helyezve. A számításokat mindenhol R statisztikai környezet alatt szemlélti."
 lang: hu
-github-repo: tamas-ferenci/FerenciTamas_Okonometria
-url: https://tamas-ferenci.github.io/FerenciTamas_Okonometria/
+github-repo: ferenci-tamas/FerenciTamas_Okonometria
+url: https://ferenci-tamas.github.io/FerenciTamas_Okonometria/
 cover-image: FerenciTamas_Okonometria_cover.png
 ---
 
