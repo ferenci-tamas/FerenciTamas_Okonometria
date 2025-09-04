@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>2 . fejezet Regresszió a mintában: következtetés | Ökonometria</title>
   <meta name="description" content="Az ökonometria a társadalmi-gazdasági jelenségek kvantitatív, empirikus vizsgálatának, modellezésének tudománya. A jegyzet ezt tárgyalja, kerülve a mély matematikai részleteket, a hangsúlyt inkább a módszerek sokféleségének bemutatására helyezve. A számításokat mindenhol R statisztikai környezet alatt szemlélti." />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.44 and GitBook 2.6.7" />
 
   <meta property="og:title" content="2 . fejezet Regresszió a mintában: következtetés | Ökonometria" />
   <meta property="og:type" content="book" />
-  <meta property="og:url" content="https://tamas-ferenci.github.io/FerenciTamas_Okonometria/" />
   <meta property="og:image" content="https://tamas-ferenci.github.io/FerenciTamas_Okonometria/FerenciTamas_Okonometria_cover.png" />
   <meta property="og:description" content="Az ökonometria a társadalmi-gazdasági jelenségek kvantitatív, empirikus vizsgálatának, modellezésének tudománya. A jegyzet ezt tárgyalja, kerülve a mély matematikai részleteket, a hangsúlyt inkább a módszerek sokféleségének bemutatására helyezve. A számításokat mindenhol R statisztikai környezet alatt szemlélti." />
   <meta name="github-repo" content="tamas-ferenci/FerenciTamas_Okonometria" />
@@ -32,8 +31,8 @@
   
 <link rel="prev" href="út-a-többváltozós-regresszióhoz.html"/>
 <link rel="next" href="kategoriális-magyarázó-változók.html"/>
-<script src="libs/header-attrs-2.6/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -49,22 +48,16 @@
 
 
 
-
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-19799395-2"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-19799395-2');
-</script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -72,7 +65,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -98,7 +91,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -111,7 +104,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -125,7 +118,11 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<link rel="stylesheet" href="style.css" type="text/css" />
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
 </head>
 
 <body>
@@ -141,89 +138,89 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">Ferenci Tamás: Ökonometria</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Előszó</a></li>
-<li class="chapter" data-level="1" data-path="út-a-többváltozós-regresszióhoz.html"><a href="út-a-többváltozós-regresszióhoz.html"><i class="fa fa-check"></i><b>1</b> Út a többváltozós regresszióhoz</a>
+<li class="chapter" data-level="" data-path=""><a href="#el%C5%91sz%C3%B3"><i class="fa fa-check"></i>Előszó</a></li>
+<li class="chapter" data-level="1" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#%C3%BAt-a-t%C3%B6bbv%C3%A1ltoz%C3%B3s-regresszi%C3%B3hoz"><i class="fa fa-check"></i><b>1</b> Út a többváltozós regresszióhoz</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="út-a-többváltozós-regresszióhoz.html"><a href="út-a-többváltozós-regresszióhoz.html#történetünk-első-szála-néhány-motiváló-példa"><i class="fa fa-check"></i><b>1.1</b> Történetünk első szála: néhány motiváló példa</a>
+<li class="chapter" data-level="1.1" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#t%C3%B6rt%C3%A9net%C3%BCnk-els%C5%91-sz%C3%A1la-n%C3%A9h%C3%A1ny-motiv%C3%A1l%C3%B3-p%C3%A9lda"><i class="fa fa-check"></i><b>1.1</b> Történetünk első szála: néhány motiváló példa</a>
 <ul>
-<li class="chapter" data-level="1.1.1" data-path="út-a-többváltozós-regresszióhoz.html"><a href="út-a-többváltozós-regresszióhoz.html#hogyan-hat-az-osztálylétszám-a-tanulók-teljesítményére"><i class="fa fa-check"></i><b>1.1.1</b> Hogyan hat az osztálylétszám a tanulók teljesítményére?</a></li>
-<li class="chapter" data-level="1.1.2" data-path="út-a-többváltozós-regresszióhoz.html"><a href="út-a-többváltozós-regresszióhoz.html#csökkenti-e-a-korrupció-mértékét-a-nők-részvétele-a-politikában"><i class="fa fa-check"></i><b>1.1.2</b> Csökkenti-e a korrupció mértékét a nők részvétele a politikában?</a></li>
-<li class="chapter" data-level="1.1.3" data-path="út-a-többváltozós-regresszióhoz.html"><a href="út-a-többváltozós-regresszióhoz.html#csalnak-e-az-orosz-választásokon"><i class="fa fa-check"></i><b>1.1.3</b> Csalnak-e az orosz választásokon?</a></li>
-<li class="chapter" data-level="1.1.4" data-path="út-a-többváltozós-regresszióhoz.html"><a href="út-a-többváltozós-regresszióhoz.html#további-példák"><i class="fa fa-check"></i><b>1.1.4</b> További példák</a></li>
+<li class="chapter" data-level="1.1.1" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#hogyan-hat-az-oszt%C3%A1lyl%C3%A9tsz%C3%A1m-a-tanul%C3%B3k-teljes%C3%ADtm%C3%A9ny%C3%A9re"><i class="fa fa-check"></i><b>1.1.1</b> Hogyan hat az osztálylétszám a tanulók teljesítményére?</a></li>
+<li class="chapter" data-level="1.1.2" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#cs%C3%B6kkenti-e-a-korrupci%C3%B3-m%C3%A9rt%C3%A9k%C3%A9t-a-n%C5%91k-r%C3%A9szv%C3%A9tele-a-politik%C3%A1ban"><i class="fa fa-check"></i><b>1.1.2</b> Csökkenti-e a korrupció mértékét a nők részvétele a politikában?</a></li>
+<li class="chapter" data-level="1.1.3" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#csalnak-e-az-orosz-v%C3%A1laszt%C3%A1sokon"><i class="fa fa-check"></i><b>1.1.3</b> Csalnak-e az orosz választásokon?</a></li>
+<li class="chapter" data-level="1.1.4" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#tov%C3%A1bbi-p%C3%A9ld%C3%A1k"><i class="fa fa-check"></i><b>1.1.4</b> További példák</a></li>
 </ul></li>
-<li class="chapter" data-level="1.2" data-path="út-a-többváltozós-regresszióhoz.html"><a href="út-a-többváltozós-regresszióhoz.html#a-példák-tanulságai-az-empirikus-adatok-elemzésének-legnagyobb-problémája"><i class="fa fa-check"></i><b>1.2</b> A példák tanulságai: az empirikus adatok elemzésének legnagyobb problémája</a></li>
-<li class="chapter" data-level="1.3" data-path="út-a-többváltozós-regresszióhoz.html"><a href="út-a-többváltozós-regresszióhoz.html#a-confounding-megoldásai-kísérlet-és-megfigyelés"><i class="fa fa-check"></i><b>1.3</b> A confounding megoldásai: kísérlet és megfigyelés</a></li>
-<li class="chapter" data-level="1.4" data-path="út-a-többváltozós-regresszióhoz.html"><a href="út-a-többváltozós-regresszióhoz.html#történetünk-második-szála-a-regressziós-modellek"><i class="fa fa-check"></i><b>1.4</b> Történetünk második szála: a regressziós modellek</a></li>
-<li class="chapter" data-level="1.5" data-path="út-a-többváltozós-regresszióhoz.html"><a href="út-a-többváltozós-regresszióhoz.html#regresszió-a-sokaságban"><i class="fa fa-check"></i><b>1.5</b> Regresszió a sokaságban</a></li>
-<li class="chapter" data-level="1.6" data-path="út-a-többváltozós-regresszióhoz.html"><a href="út-a-többváltozós-regresszióhoz.html#a-szálak-összeérnek"><i class="fa fa-check"></i><b>1.6</b> A szálak összeérnek</a></li>
+<li class="chapter" data-level="1.2" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#a-p%C3%A9ld%C3%A1k-tanuls%C3%A1gai-az-empirikus-adatok-elemz%C3%A9s%C3%A9nek-legnagyobb-probl%C3%A9m%C3%A1ja"><i class="fa fa-check"></i><b>1.2</b> A példák tanulságai: az empirikus adatok elemzésének legnagyobb problémája</a></li>
+<li class="chapter" data-level="1.3" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#a-confounding-megold%C3%A1sai-k%C3%ADs%C3%A9rlet-%C3%A9s-megfigyel%C3%A9s"><i class="fa fa-check"></i><b>1.3</b> A confounding megoldásai: kísérlet és megfigyelés</a></li>
+<li class="chapter" data-level="1.4" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#t%C3%B6rt%C3%A9net%C3%BCnk-m%C3%A1sodik-sz%C3%A1la-a-regresszi%C3%B3s-modellek"><i class="fa fa-check"></i><b>1.4</b> Történetünk második szála: a regressziós modellek</a></li>
+<li class="chapter" data-level="1.5" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#regresszi%C3%B3-a-sokas%C3%A1gban"><i class="fa fa-check"></i><b>1.5</b> Regresszió a sokaságban</a></li>
+<li class="chapter" data-level="1.6" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#a-sz%C3%A1lak-%C3%B6ssze%C3%A9rnek"><i class="fa fa-check"></i><b>1.6</b> A szálak összeérnek</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="regresszió-a-mintában-következtetés.html"><a href="regresszió-a-mintában-következtetés.html"><i class="fa fa-check"></i><b>2</b> Regresszió a mintában: következtetés</a>
+<li class="chapter" data-level="2" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#regresszi%C3%B3-a-mint%C3%A1ban-k%C3%B6vetkeztet%C3%A9s"><i class="fa fa-check"></i><b>2</b> Regresszió a mintában: következtetés</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="regresszió-a-mintában-következtetés.html"><a href="regresszió-a-mintában-következtetés.html#a-hagyományos-legkisebb-négyzetek-ols-elve"><i class="fa fa-check"></i><b>2.1</b> A hagyományos legkisebb négyzetek (OLS) elve</a></li>
-<li class="chapter" data-level="2.2" data-path="regresszió-a-mintában-következtetés.html"><a href="regresszió-a-mintában-következtetés.html#lineáris-regresszió-becslése-ols-elven"><i class="fa fa-check"></i><b>2.2</b> Lineáris regresszió becslése OLS-elven</a></li>
+<li class="chapter" data-level="2.1" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#a-hagyom%C3%A1nyos-legkisebb-n%C3%A9gyzetek-ols-elve"><i class="fa fa-check"></i><b>2.1</b> A hagyományos legkisebb négyzetek (OLS) elve</a></li>
+<li class="chapter" data-level="2.2" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#line%C3%A1ris-regresszi%C3%B3-becsl%C3%A9se-ols-elven"><i class="fa fa-check"></i><b>2.2</b> Lineáris regresszió becslése OLS-elven</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="kategoriális-magyarázó-változók.html"><a href="kategoriális-magyarázó-változók.html"><i class="fa fa-check"></i><b>3</b> Kategoriális magyarázó változók</a>
+<li class="chapter" data-level="3" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#kategori%C3%A1lis-magyar%C3%A1z%C3%B3-v%C3%A1ltoz%C3%B3k"><i class="fa fa-check"></i><b>3</b> Kategoriális magyarázó változók</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="kategoriális-magyarázó-változók.html"><a href="kategoriális-magyarázó-változók.html#regresszió-csak-minőségi-változóval-anova"><i class="fa fa-check"></i><b>3.1</b> Regresszió csak minőségi változóval (ANOVA)</a>
+<li class="chapter" data-level="3.1" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#regresszi%C3%B3-csak-min%C5%91s%C3%A9gi-v%C3%A1ltoz%C3%B3val-anova"><i class="fa fa-check"></i><b>3.1</b> Regresszió csak minőségi változóval (ANOVA)</a>
 <ul>
-<li class="chapter" data-level="3.1.1" data-path="kategoriális-magyarázó-változók.html"><a href="kategoriális-magyarázó-változók.html#minőségi-változók-a-regresszióban"><i class="fa fa-check"></i><b>3.1.1</b> Minőségi változók a regresszióban</a></li>
-<li class="chapter" data-level="3.1.2" data-path="kategoriális-magyarázó-változók.html"><a href="kategoriális-magyarázó-változók.html#dummy-változó-fogalma"><i class="fa fa-check"></i><b>3.1.2</b> Dummy változó fogalma</a></li>
-<li class="chapter" data-level="3.1.3" data-path="kategoriális-magyarázó-változók.html"><a href="kategoriális-magyarázó-változók.html#kódolás"><i class="fa fa-check"></i><b>3.1.3</b> Kódolás</a></li>
-<li class="chapter" data-level="3.1.4" data-path="kategoriális-magyarázó-változók.html"><a href="kategoriális-magyarázó-változók.html#referencia-kódolás"><i class="fa fa-check"></i><b>3.1.4</b> Referencia-kódolás</a></li>
-<li class="chapter" data-level="3.1.5" data-path="kategoriális-magyarázó-változók.html"><a href="kategoriális-magyarázó-változók.html#dummy-változó-csapda"><i class="fa fa-check"></i><b>3.1.5</b> Dummy változó csapda</a></li>
-<li class="chapter" data-level="3.1.6" data-path="kategoriális-magyarázó-változók.html"><a href="kategoriális-magyarázó-változók.html#triviális-kódolás-konstans-nélkül"><i class="fa fa-check"></i><b>3.1.6</b> Triviális kódolás konstans nélkül</a></li>
-<li class="chapter" data-level="3.1.7" data-path="kategoriális-magyarázó-változók.html"><a href="kategoriális-magyarázó-változók.html#referencia-kódolás-konstanssal"><i class="fa fa-check"></i><b>3.1.7</b> Referencia-kódolás konstanssal</a></li>
-<li class="chapter" data-level="3.1.8" data-path="kategoriális-magyarázó-változók.html"><a href="kategoriális-magyarázó-változók.html#együtthatók-értelmezése-referencia-kódolásnál"><i class="fa fa-check"></i><b>3.1.8</b> Együtthatók értelmezése referencia-kódolásnál</a></li>
-<li class="chapter" data-level="3.1.9" data-path="kategoriális-magyarázó-változók.html"><a href="kategoriális-magyarázó-változók.html#fontos-hipotézisvizsgálatok"><i class="fa fa-check"></i><b>3.1.9</b> Fontos hipotézisvizsgálatok</a></li>
-<li class="chapter" data-level="3.1.10" data-path="kategoriális-magyarázó-változók.html"><a href="kategoriális-magyarázó-változók.html#egynél-több-kategoriális-magyarázó-változó"><i class="fa fa-check"></i><b>3.1.10</b> Egynél több kategoriális magyarázó változó</a></li>
+<li class="chapter" data-level="3.1.1" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#min%C5%91s%C3%A9gi-v%C3%A1ltoz%C3%B3k-a-regresszi%C3%B3ban"><i class="fa fa-check"></i><b>3.1.1</b> Minőségi változók a regresszióban</a></li>
+<li class="chapter" data-level="3.1.2" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#dummy-v%C3%A1ltoz%C3%B3-fogalma"><i class="fa fa-check"></i><b>3.1.2</b> Dummy változó fogalma</a></li>
+<li class="chapter" data-level="3.1.3" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#k%C3%B3dol%C3%A1s"><i class="fa fa-check"></i><b>3.1.3</b> Kódolás</a></li>
+<li class="chapter" data-level="3.1.4" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#referencia-k%C3%B3dol%C3%A1s"><i class="fa fa-check"></i><b>3.1.4</b> Referencia-kódolás</a></li>
+<li class="chapter" data-level="3.1.5" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#dummy-v%C3%A1ltoz%C3%B3-csapda"><i class="fa fa-check"></i><b>3.1.5</b> Dummy változó csapda</a></li>
+<li class="chapter" data-level="3.1.6" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#trivi%C3%A1lis-k%C3%B3dol%C3%A1s-konstans-n%C3%A9lk%C3%BCl"><i class="fa fa-check"></i><b>3.1.6</b> Triviális kódolás konstans nélkül</a></li>
+<li class="chapter" data-level="3.1.7" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#referencia-k%C3%B3dol%C3%A1s-konstanssal"><i class="fa fa-check"></i><b>3.1.7</b> Referencia-kódolás konstanssal</a></li>
+<li class="chapter" data-level="3.1.8" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#egy%C3%BCtthat%C3%B3k-%C3%A9rtelmez%C3%A9se-referencia-k%C3%B3dol%C3%A1sn%C3%A1l"><i class="fa fa-check"></i><b>3.1.8</b> Együtthatók értelmezése referencia-kódolásnál</a></li>
+<li class="chapter" data-level="3.1.9" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#fontos-hipot%C3%A9zisvizsg%C3%A1latok"><i class="fa fa-check"></i><b>3.1.9</b> Fontos hipotézisvizsgálatok</a></li>
+<li class="chapter" data-level="3.1.10" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#egyn%C3%A9l-t%C3%B6bb-kategori%C3%A1lis-magyar%C3%A1z%C3%B3-v%C3%A1ltoz%C3%B3"><i class="fa fa-check"></i><b>3.1.10</b> Egynél több kategoriális magyarázó változó</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="kategoriális-magyarázó-változók.html"><a href="kategoriális-magyarázó-változók.html#regresszió-minőségi-és-mennyiségi-magyarázó-változóval-ancova"><i class="fa fa-check"></i><b>3.2</b> Regresszió minőségi és mennyiségi magyarázó változóval (ANCOVA)</a>
+<li class="chapter" data-level="3.2" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#regresszi%C3%B3-min%C5%91s%C3%A9gi-%C3%A9s-mennyis%C3%A9gi-magyar%C3%A1z%C3%B3-v%C3%A1ltoz%C3%B3val-ancova"><i class="fa fa-check"></i><b>3.2</b> Regresszió minőségi és mennyiségi magyarázó változóval (ANCOVA)</a>
 <ul>
-<li class="chapter" data-level="3.2.1" data-path="kategoriális-magyarázó-változók.html"><a href="kategoriális-magyarázó-változók.html#dummyzás-folytonos-magyarázó-változó-jelenléte-mellett"><i class="fa fa-check"></i><b>3.2.1</b> Dummyzás folytonos magyarázó változó jelenléte mellett}</a></li>
-<li class="chapter" data-level="3.2.2" data-path="kategoriális-magyarázó-változók.html"><a href="kategoriális-magyarázó-változók.html#eltérő-tengelymetszet"><i class="fa fa-check"></i><b>3.2.2</b> Eltérő tengelymetszet</a></li>
-<li class="chapter" data-level="3.2.3" data-path="kategoriális-magyarázó-változók.html"><a href="kategoriális-magyarázó-változók.html#eltérő-meredekség"><i class="fa fa-check"></i><b>3.2.3</b> Eltérő meredekség</a></li>
-<li class="chapter" data-level="3.2.4" data-path="kategoriális-magyarázó-változók.html"><a href="kategoriális-magyarázó-változók.html#eltérő-tengelymetszet-és-meredekség"><i class="fa fa-check"></i><b>3.2.4</b> Eltérő tengelymetszet és meredekség</a></li>
-<li class="chapter" data-level="3.2.5" data-path="kategoriális-magyarázó-változók.html"><a href="kategoriális-magyarázó-változók.html#eltérő-tengelymetszet-és-meredekség-1"><i class="fa fa-check"></i><b>3.2.5</b> Eltérő tengelymetszet és meredekség</a></li>
-<li class="chapter" data-level="3.2.6" data-path="kategoriális-magyarázó-változók.html"><a href="kategoriális-magyarázó-változók.html#hipotézisvizsgálat-a-dummyzott-modellben"><i class="fa fa-check"></i><b>3.2.6</b> Hipotézisvizsgálat a dummyzott modellben</a></li>
-<li class="chapter" data-level="3.2.7" data-path="kategoriális-magyarázó-változók.html"><a href="kategoriális-magyarázó-változók.html#kontraszt-kódolás"><i class="fa fa-check"></i><b>3.2.7</b> Kontraszt-kódolás</a></li>
-<li class="chapter" data-level="3.2.8" data-path="kategoriális-magyarázó-változók.html"><a href="kategoriális-magyarázó-változók.html#egy-terminológiai-megjegyzés"><i class="fa fa-check"></i><b>3.2.8</b> Egy terminológiai megjegyzés</a></li>
+<li class="chapter" data-level="3.2.1" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#dummyz%C3%A1s-folytonos-magyar%C3%A1z%C3%B3-v%C3%A1ltoz%C3%B3-jelenl%C3%A9te-mellett"><i class="fa fa-check"></i><b>3.2.1</b> Dummyzás folytonos magyarázó változó jelenléte mellett</a></li>
+<li class="chapter" data-level="3.2.2" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#elt%C3%A9r%C5%91-tengelymetszet"><i class="fa fa-check"></i><b>3.2.2</b> Eltérő tengelymetszet</a></li>
+<li class="chapter" data-level="3.2.3" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#elt%C3%A9r%C5%91-meredeks%C3%A9g"><i class="fa fa-check"></i><b>3.2.3</b> Eltérő meredekség</a></li>
+<li class="chapter" data-level="3.2.4" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#elt%C3%A9r%C5%91-tengelymetszet-%C3%A9s-meredeks%C3%A9g"><i class="fa fa-check"></i><b>3.2.4</b> Eltérő tengelymetszet és meredekség</a></li>
+<li class="chapter" data-level="3.2.5" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#elt%C3%A9r%C5%91-tengelymetszet-%C3%A9s-meredeks%C3%A9g-1"><i class="fa fa-check"></i><b>3.2.5</b> Eltérő tengelymetszet és meredekség</a></li>
+<li class="chapter" data-level="3.2.6" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#hipot%C3%A9zisvizsg%C3%A1lat-a-dummyzott-modellben"><i class="fa fa-check"></i><b>3.2.6</b> Hipotézisvizsgálat a dummyzott modellben</a></li>
+<li class="chapter" data-level="3.2.7" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#kontraszt-k%C3%B3dol%C3%A1s"><i class="fa fa-check"></i><b>3.2.7</b> Kontraszt-kódolás</a></li>
+<li class="chapter" data-level="3.2.8" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#egy-terminol%C3%B3giai-megjegyz%C3%A9s"><i class="fa fa-check"></i><b>3.2.8</b> Egy terminológiai megjegyzés</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html"><i class="fa fa-check"></i><b>4</b> Nemlineáris modellek</a>
+<li class="chapter" data-level="4" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#nemline%C3%A1ris-modellek"><i class="fa fa-check"></i><b>4</b> Nemlineáris modellek</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#elöljáróban-a-marginális-hatás-általánosabb-értelmezése"><i class="fa fa-check"></i><b>4.1</b> Elöljáróban: a marginális hatás általánosabb értelmezése</a>
+<li class="chapter" data-level="4.1" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#el%C3%B6lj%C3%A1r%C3%B3ban-a-margin%C3%A1lis-hat%C3%A1s-%C3%A1ltal%C3%A1nosabb-%C3%A9rtelmez%C3%A9se"><i class="fa fa-check"></i><b>4.1</b> Elöljáróban: a marginális hatás általánosabb értelmezése</a>
 <ul>
-<li class="chapter" data-level="4.1.1" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#a-marginális-hatás-fogalma"><i class="fa fa-check"></i><b>4.1.1</b> A marginális hatás fogalma</a></li>
-<li class="chapter" data-level="4.1.2" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#a-marginális-hatás-precízebben"><i class="fa fa-check"></i><b>4.1.2</b> A marginális hatás precízebben</a></li>
+<li class="chapter" data-level="4.1.1" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#a-margin%C3%A1lis-hat%C3%A1s-fogalma"><i class="fa fa-check"></i><b>4.1.1</b> A marginális hatás fogalma</a></li>
+<li class="chapter" data-level="4.1.2" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#a-margin%C3%A1lis-hat%C3%A1s-prec%C3%ADzebben"><i class="fa fa-check"></i><b>4.1.2</b> A marginális hatás precízebben</a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#a-linearitás-feloldása"><i class="fa fa-check"></i><b>4.2</b> A linearitás feloldása</a>
+<li class="chapter" data-level="4.2" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#a-linearit%C3%A1s-felold%C3%A1sa"><i class="fa fa-check"></i><b>4.2</b> A linearitás feloldása</a>
 <ul>
-<li class="chapter" data-level="4.2.1" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#emlékeztetőül-a-linearitás-következményei"><i class="fa fa-check"></i><b>4.2.1</b> Emlékeztetőül: a linearitás következményei</a></li>
-<li class="chapter" data-level="4.2.2" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#az-additivitás-feloldása-az-interakció"><i class="fa fa-check"></i><b>4.2.2</b> Az additivitás feloldása: az interakció</a></li>
-<li class="chapter" data-level="4.2.3" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#a-marginális-hatás-interakciók-esetén"><i class="fa fa-check"></i><b>4.2.3</b> A marginális hatás interakciók esetén</a></li>
-<li class="chapter" data-level="4.2.4" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#a-változónkénti-linearitás-feloldása-egy-motiváló-példa"><i class="fa fa-check"></i><b>4.2.4</b> A változónkénti linearitás feloldása: egy motiváló példa</a></li>
-<li class="chapter" data-level="4.2.5" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#a-változónkénti-linearitás-feloldása-egy-motiváló-példa-1"><i class="fa fa-check"></i><b>4.2.5</b> A változónkénti linearitás feloldása: egy motiváló példa</a></li>
-<li class="chapter" data-level="4.2.6" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#linearitás-mint-közelítés"><i class="fa fa-check"></i><b>4.2.6</b> Linearitás, mint közelítés</a></li>
-<li class="chapter" data-level="4.2.7" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#érvényességi-határok"><i class="fa fa-check"></i><b>4.2.7</b> Érvényességi határok</a></li>
-<li class="chapter" data-level="4.2.8" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#nemlinearitás-fajtái"><i class="fa fa-check"></i><b>4.2.8</b> Nemlinearitás fajtái</a></li>
-<li class="chapter" data-level="4.2.9" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#változójában-nemlineáris-modell"><i class="fa fa-check"></i><b>4.2.9</b> Változójában nemlineáris modell</a></li>
-<li class="chapter" data-level="4.2.10" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#paramétereiben-nemlineáris-modell"><i class="fa fa-check"></i><b>4.2.10</b> Paramétereiben nemlineáris modell</a></li>
-<li class="chapter" data-level="4.2.11" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#interakció-és-kvadratikus-hatás-revisited"><i class="fa fa-check"></i><b>4.2.11</b> Interakció és kvadratikus hatás revisited</a></li>
-<li class="chapter" data-level="4.2.12" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#nemlinearitás-kezelése-nls"><i class="fa fa-check"></i><b>4.2.12</b> Nemlinearitás kezelése: NLS</a></li>
-<li class="chapter" data-level="4.2.13" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#nemlinearitás-kezelése-algebrai-linearizáció"><i class="fa fa-check"></i><b>4.2.13</b> Nemlinearitás kezelése: algebrai linearizáció</a></li>
+<li class="chapter" data-level="4.2.1" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#eml%C3%A9keztet%C5%91%C3%BCl-a-linearit%C3%A1s-k%C3%B6vetkezm%C3%A9nyei"><i class="fa fa-check"></i><b>4.2.1</b> Emlékeztetőül: a linearitás következményei</a></li>
+<li class="chapter" data-level="4.2.2" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#az-additivit%C3%A1s-felold%C3%A1sa-az-interakci%C3%B3"><i class="fa fa-check"></i><b>4.2.2</b> Az additivitás feloldása: az interakció</a></li>
+<li class="chapter" data-level="4.2.3" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#a-margin%C3%A1lis-hat%C3%A1s-interakci%C3%B3k-eset%C3%A9n"><i class="fa fa-check"></i><b>4.2.3</b> A marginális hatás interakciók esetén</a></li>
+<li class="chapter" data-level="4.2.4" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#a-v%C3%A1ltoz%C3%B3nk%C3%A9nti-linearit%C3%A1s-felold%C3%A1sa-egy-motiv%C3%A1l%C3%B3-p%C3%A9lda"><i class="fa fa-check"></i><b>4.2.4</b> A változónkénti linearitás feloldása: egy motiváló példa</a></li>
+<li class="chapter" data-level="4.2.5" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#a-v%C3%A1ltoz%C3%B3nk%C3%A9nti-linearit%C3%A1s-felold%C3%A1sa-egy-motiv%C3%A1l%C3%B3-p%C3%A9lda-1"><i class="fa fa-check"></i><b>4.2.5</b> A változónkénti linearitás feloldása: egy motiváló példa</a></li>
+<li class="chapter" data-level="4.2.6" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#linearit%C3%A1s-mint-k%C3%B6zel%C3%ADt%C3%A9s"><i class="fa fa-check"></i><b>4.2.6</b> Linearitás, mint közelítés</a></li>
+<li class="chapter" data-level="4.2.7" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#%C3%A9rv%C3%A9nyess%C3%A9gi-hat%C3%A1rok"><i class="fa fa-check"></i><b>4.2.7</b> Érvényességi határok</a></li>
+<li class="chapter" data-level="4.2.8" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#nemlinearit%C3%A1s-fajt%C3%A1i"><i class="fa fa-check"></i><b>4.2.8</b> Nemlinearitás fajtái</a></li>
+<li class="chapter" data-level="4.2.9" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#v%C3%A1ltoz%C3%B3j%C3%A1ban-nemline%C3%A1ris-modell"><i class="fa fa-check"></i><b>4.2.9</b> Változójában nemlineáris modell</a></li>
+<li class="chapter" data-level="4.2.10" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#param%C3%A9tereiben-nemline%C3%A1ris-modell"><i class="fa fa-check"></i><b>4.2.10</b> Paramétereiben nemlineáris modell</a></li>
+<li class="chapter" data-level="4.2.11" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#interakci%C3%B3-%C3%A9s-kvadratikus-hat%C3%A1s-revisited"><i class="fa fa-check"></i><b>4.2.11</b> Interakció és kvadratikus hatás revisited</a></li>
+<li class="chapter" data-level="4.2.12" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#nemlinearit%C3%A1s-kezel%C3%A9se-nls"><i class="fa fa-check"></i><b>4.2.12</b> Nemlinearitás kezelése: NLS</a></li>
+<li class="chapter" data-level="4.2.13" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#nemlinearit%C3%A1s-kezel%C3%A9se-algebrai-lineariz%C3%A1ci%C3%B3"><i class="fa fa-check"></i><b>4.2.13</b> Nemlinearitás kezelése: algebrai linearizáció</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#néhány-nevezetes-paraméterében-nemlineáris-modell"><i class="fa fa-check"></i><b>4.3</b> Néhány nevezetes, paraméterében nemlineáris modell</a>
+<li class="chapter" data-level="4.3" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#n%C3%A9h%C3%A1ny-nevezetes-param%C3%A9ter%C3%A9ben-nemline%C3%A1ris-modell"><i class="fa fa-check"></i><b>4.3</b> Néhány nevezetes, paraméterében nemlineáris modell</a>
 <ul>
-<li class="chapter" data-level="4.3.1" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#log-log-modell"><i class="fa fa-check"></i><b>4.3.1</b> Log-log modell</a></li>
+<li class="chapter" data-level="4.3.1" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html"><i class="fa fa-check"></i><b>4.3.1</b> Log-log modell</a></li>
 <li class="chapter" data-level="4.3.2" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#log-lin-modell"><i class="fa fa-check"></i><b>4.3.2</b> Log-lin modell</a></li>
-<li class="chapter" data-level="4.3.3" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#lin-log-modell-kakukktojás"><i class="fa fa-check"></i><b>4.3.3</b> Lin-log modell – kakukktojás!</a></li>
-<li class="chapter" data-level="4.3.4" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#reciprok-modell-kakukktojás"><i class="fa fa-check"></i><b>4.3.4</b> Reciprok modell – kakukktojás</a></li>
-<li class="chapter" data-level="4.3.5" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#egy-komplex-példa-vegyes-modellre"><i class="fa fa-check"></i><b>4.3.5</b> Egy komplex példa vegyes modellre</a></li>
+<li class="chapter" data-level="4.3.3" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#lin-log-modell-kakukktoj%C3%A1s"><i class="fa fa-check"></i><b>4.3.3</b> Lin-log modell – kakukktojás!</a></li>
+<li class="chapter" data-level="4.3.4" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#reciprok-modell-kakukktoj%C3%A1s"><i class="fa fa-check"></i><b>4.3.4</b> Reciprok modell – kakukktojás</a></li>
+<li class="chapter" data-level="4.3.5" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#egy-komplex-p%C3%A9lda-vegyes-modellre"><i class="fa fa-check"></i><b>4.3.5</b> Egy komplex példa vegyes modellre</a></li>
 </ul></li>
-<li class="chapter" data-level="4.4" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#specifikációs-tesztek"><i class="fa fa-check"></i><b>4.4</b> Specifikációs tesztek</a>
+<li class="chapter" data-level="4.4" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#specifik%C3%A1ci%C3%B3s-tesztek"><i class="fa fa-check"></i><b>4.4</b> Specifikációs tesztek</a>
 <ul>
-<li class="chapter" data-level="4.4.1" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#a-specifikációs-tesztek"><i class="fa fa-check"></i><b>4.4.1</b> A specifikációs tesztek</a></li>
-<li class="chapter" data-level="4.4.2" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#egy-egyszerű-specifikációs-teszt"><i class="fa fa-check"></i><b>4.4.2</b> Egy egyszerű specifikációs teszt</a></li>
+<li class="chapter" data-level="4.4.1" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#a-specifik%C3%A1ci%C3%B3s-tesztek"><i class="fa fa-check"></i><b>4.4.1</b> A specifikációs tesztek</a></li>
+<li class="chapter" data-level="4.4.2" data-path="02-regresszioamintabankovetkeztetes.html"><a href="#egy-egyszer%C5%B1-specifik%C3%A1ci%C3%B3s-teszt"><i class="fa fa-check"></i><b>4.4.2</b> Egy egyszerű specifikációs teszt</a></li>
 <li class="chapter" data-level="4.4.3" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#ramsey-reset-je"><i class="fa fa-check"></i><b>4.4.3</b> Ramsey RESET-je</a></li>
 </ul></li>
 </ul></li>
@@ -247,115 +244,87 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="regresszió-a-mintában-következtetés" class="section level1" number="2">
-<h1><span class="header-section-number">2 . fejezet</span> Regresszió a mintában: következtetés</h1>
-<p><span class="math inline">\(\DeclareMathOperator*{\argmin}{arg\,min}\)</span>
-<span class="math inline">\(\DeclareMathOperator*{\argmax}{arg\,max}\)</span>
-<span class="math inline">\(\DeclareMathOperator*{\rank}{rank}\)</span>
-<span class="math inline">\(\def\uuline#1{\underline{\underline{#1}}}\)</span></p>
+<div id="regresszió-a-mintában-következtetés" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">2 . fejezet</span> Regresszió a mintában: következtetés<a href="#regresszi%C3%B3-a-mint%C3%A1ban-k%C3%B6vetkeztet%C3%A9s" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Pár fogalmat talán érdemes feleleveníteni következtető statisztikából. Az alapprobléma: a halmaz amire a kérdésünk irányul, a <strong>sokaság</strong> sajnos azonban ennek minden elemét nem tudjuk megfigyelni (azaz lemérni), csak egy részét, a kisebb részhalmaz a <strong>minta</strong>. Ez előfordulhat akkor, ha a sokaság TODO</p>
-<div id="a-hagyományos-legkisebb-négyzetek-ols-elve" class="section level2" number="2.1">
-<h2><span class="header-section-number">2.1</span> A hagyományos legkisebb négyzetek (OLS) elve</h2>
+<div id="a-hagyományos-legkisebb-négyzetek-ols-elve" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> A hagyományos legkisebb négyzetek (OLS) elve<a href="#a-hagyom%C3%A1nyos-legkisebb-n%C3%A9gyzetek-ols-elve" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Ilyen becslési elv a hagyományos legkisebb négyzetek (ordinary least squares, OLS) elve. Mint általános becslési el, nem kell hozzá semmilyen regresszió, a legközönségesebb következtető statisztikai példán is elmondható. Példaként vegyük az egyik legelemibb kérdést: sokasági várható érték becslése normalitás esetén, tehát a sokaság eloszlása normális (az egyszerűség kedvéért legyen a szórás is ismert, tehát azt nem kell becsülnünk). Ami fontos: bár egy alap következtető statisztika kurzuson nem szokták mondani, de lényegében itt is az a helyzet, hogy egy <em>modellt</em> feltételezünk a sokaságra, jelesül: <span class="math inline">\(Y \sim \mathcal{N}\left(\mu,\sigma_0^2\right)\)</span>, amit nem mellesleg úgy is írhatnánk, hogy <span class="math inline">\(Y=\mu+\varepsilon\)</span>, ahol <span class="math inline">\(\varepsilon\sim\mathcal{N}\left(0,\sigma_0^2\right)\)</span>. Most <span class="math inline">\(\mu\)</span> megbecslése céljából veszünk egy <span class="math inline">\(n\)</span> elemű fae (független, azonos eloszlású) mintát a sokaságból; ekkor feltevésünk szerint <span class="math inline">\(Y_i=\mu+\varepsilon_i\)</span> lesz az <span class="math inline">\(i\)</span>-edik mintaelem. (A feltevésünk igazából azt jelentette, hogy az <span class="math inline">\(\varepsilon_i\)</span> változók függetlenek és azonos eloszlásúak.) Figyeljünk oda a kis és nagybetűkre! A nagy betű valószínűségi változó, valami aminek eloszlása van, sokasági dolog. Kisbetű egy konkrét szám, nem valószínűségi, nincsen eloszlása, mintabeli dolog. Most valaki megkérdezhetné, hogy oké, azt értem, hogy <span class="math inline">\(Y\)</span> miért nagy betű, de az <span class="math inline">\(Y_i\)</span> miért az? Hiszen azt mondtuk, hogy az az egyik mintaelem…! Talán a legjobban úgy lehet ezt elképzelni, hogy a véletlen mintavétel az, hogy megkeverjük az urnát, hogy kihúzzunk belőle egy golyót. Megáll a keverés, nyúlunk bele az urnába, hogy húzzunk: ekkor számunkra az még egy véletlen dolog, hogy mi lesz az elsőként húzott elem, annak eloszlása van (fae mintavétel esetén – tehát ha a golyókat mindig visszadobjuk, és az urnát mindig jól átkeverjük – ugyanaz, mint a sokaság, tehát mint az egész urna eloszlása). Ekkor ez még <span class="math inline">\(Y_1\)</span> számunkra. Ekkor kihúzzuk a golyót, és meglátjuk a konkrét értéket: ez lesz <span class="math inline">\(y_1\)</span>. Kicsit matematikusabban szólva: kaptunk egy realizációt <span class="math inline">\(Y_1\)</span>-ből, ez lesz az <span class="math inline">\(y_1\)</span>.</p>
-<p>A másik ami fontos: a modellből következik egy <em>becsült érték</em> minden mintabeli elemhez, jelen esetben, ha <span class="math inline">\(m\)</span> egy feltételezett érték az ismeretlen sokasági várható értékre, akkor
-<span class="math display">\[
-    \widehat{y_i}=m.
-\]</span>
-(Itt persze elvileg beszélni kellene arról, hogy még ha tudjuk is, hogy a sokasági várható érték <span class="math inline">\(m\)</span>, miért pont az lesz a becslésünk is minden mintaelemre. Fogadjuk el intuitíve, egyébként olyan – négyzetes hiba minimalizálására hivatkozó – érvelést használhatnánk mint az előző fejezetben, úgy, hogy az egyetlen magyarázó változónk az <span class="math inline">\(X_0=1\)</span>.)</p>
+<p>A másik ami fontos: a modellből következik egy <em>becsült érték</em> minden mintabeli elemhez, jelen esetben, ha <span class="math inline">\(m\)</span> egy feltételezett érték az ismeretlen sokasági várható értékre, akkor</p>
+<p><span class="math display">\[\widehat{y_i}=m.\]</span></p>
+<p>(Itt persze elvileg beszélni kellene arról, hogy még ha tudjuk is, hogy a sokasági várható érték <span class="math inline">\(m\)</span>, miért pont az lesz a becslésünk is minden mintaelemre. Fogadjuk el intuitíve, egyébként olyan – négyzetes hiba minimalizálására hivatkozó – érvelést használhatnánk mint az előző fejezetben, úgy, hogy az egyetlen magyarázó változónk az <span class="math inline">\(X_0=1\)</span>.)</p>
 <p>Egy kitérő megjegyzés: ha jobban megnézzük a fentieket, akkor láthatjuk, hogy az OLS-elv alkalmazásához igazából nem is kell, hogy a sokasági eloszlást ismerjük, csak annyi a fontos, hogy legyen egy modellünk, és belőle tudjunk becsült értékeket származtatni a ténylegesen is ismert megfigyelésekhez.</p>
-<p>És akkor jöhet az OLS-elv! Egy mondatban összefoglalva: az ismeretlen sokasági paraméterre az a becsült érték, amely mellett a tényleges mintabeli értékek, és az adott paraméter melletti, modellből származó becsült értékek a legközelebb vannak egymáshoz, amit úgy fordítunk le, hogy a köztük lévő eltérések négyzetének összege a legkisebb! A megoldandó – optimalizációs jellegű – feladat tehát matematikailag:
-<span class="math display">\[
-    \widehat{\mu}=\argmin_m \sum_{i=1}^n \left(y_i-\widehat{y_i}\right)^2=\argmin_m \sum_{i=1}^n \left(y_i-m\right)^2
-\]</span>
-És ennek megoldása természetesen <span class="math inline">\(\widehat{\mu}=\frac{1}{n}\sum_{i=1}^n y_i=\overline{y}\)</span> ebben a példában.</p>
-<p>Egyetlen kiegészítést kell tenni a fentiekhez. Megkaptunk ugyan a becslőt, csakhogy az <span class="math inline">\(\overline{y}\)</span> egyetlen konkrét szám. (Hát persze, mert egy konkrét mintához, a <span class="math inline">\(\left\{y_1,y_2,\ldots,y_n\right\}\)</span> mintához – kisbetűk! – tartozik.) Minket azonban alapvető fontossággal fog érdekelni a becslő <strong>mintavételi eloszlása</strong>, tehát, hogy ha újra meg újra mintát veszünk ugyanabból a sokaságból, és mindegyik mintából kiszámoljuk a becslőfüggvény értékét (jelen esetben a mintaátlagot), akkor annak mi lesz az eloszlása. A becslőfüggvényünk az igazából egy <em>transzformáció</em> a mintaelemekkel (,,add össze őket és oszd el a mintanagysággal’’), de ha egyszer ez a transzformáció megvan, azt nyugodtan ráereszthetjük valószínűségi változókra is, nem csak számokra! Ami magyarán azt fogja jelenteni, hogy felírjuk ugyanazt – csak épp kisbetűk helyett nagybetűkkel. Jelen példában a becslőfüggvényünk: <span class="math inline">\(\frac{1}{n}\sum_{i=1}^n Y_i=\overline{Y}\)</span>, és íme, ennek már nagyon is eloszlása van, hiszen egy valószínűségi változó maga is – ez az eloszlás lesz a mintavételi eloszlás. Megvizsgálhatóak a tulajdonságai, megnézhetjük, hogy a várható értéke egyezik-e a sokasági paraméterrel (torzítatlanság), hogy mekkora a szórása (hatásosság), hogy hogyan viselkedik, ha <span class="math inline">\(n\)</span> egyre nagyobb (konzisztencia) és így tovább.</p>
+<p>És akkor jöhet az OLS-elv! Egy mondatban összefoglalva: az ismeretlen sokasági paraméterre az a becsült érték, amely mellett a tényleges mintabeli értékek, és az adott paraméter melletti, modellből származó becsült értékek a legközelebb vannak egymáshoz, amit úgy fordítunk le, hogy a köztük lévő eltérések négyzetének összege a legkisebb! A megoldandó – optimalizációs jellegű – feladat tehát matematikailag:</p>
+<p><span class="math display">\[\widehat{\mu}=\underset{m}{\mathrm{argmin}}\, \sum_{i=1}^n \left(y_i-\widehat{y_i}\right)^2=\underset{m}{\mathrm{argmin}}\, \sum_{i=1}^n \left(y_i-m\right)^2.\]</span></p>
+<p>És ennek megoldása természetesen <span class="math inline">\(\widehat{\mu}=\frac{1}{n}\sum_{i=1}^n y_i=\overline{y}\)</span> ebben a példában.</p>
+<p>Egyetlen kiegészítést kell tenni a fentiekhez. Megkaptuk ugyan a becslőt, csakhogy az <span class="math inline">\(\overline{y}\)</span> egyetlen konkrét szám. (Hát persze, mert egy konkrét mintához, a <span class="math inline">\(\left\{y_1,y_2,\ldots,y_n\right\}\)</span> mintához – kisbetűk! – tartozik.) Minket azonban alapvető fontossággal fog érdekelni a becslő <strong>mintavételi eloszlása</strong>, tehát, hogy ha újra meg újra mintát veszünk ugyanabból a sokaságból, és mindegyik mintából kiszámoljuk a becslőfüggvény értékét (jelen esetben a mintaátlagot), akkor annak mi lesz az eloszlása. A becslőfüggvényünk az igazából egy <em>transzformáció</em> a mintaelemekkel (<q>add össze őket és oszd el a mintanagysággal</q>), de ha egyszer ez a transzformáció megvan, azt nyugodtan ráereszthetjük valószínűségi változókra is, nem csak számokra! Ami magyarán azt fogja jelenteni, hogy felírjuk ugyanazt – csak épp kisbetűk helyett nagybetűkkel. Jelen példában a becslőfüggvényünk: <span class="math inline">\(\frac{1}{n}\sum_{i=1}^n Y_i=\overline{Y}\)</span>, és íme, ennek már nagyon is eloszlása van, hiszen egy valószínűségi változó maga is – ez az eloszlás lesz a mintavételi eloszlás. Megvizsgálhatóak a tulajdonságai, megnézhetjük, hogy a várható értéke egyezik-e a sokasági paraméterrel (torzítatlanság), hogy mekkora a szórása (hatásosság), hogy hogyan viselkedik, ha <span class="math inline">\(n\)</span> egyre nagyobb (konzisztencia) és így tovább.</p>
 </div>
-<div id="lineáris-regresszió-becslése-ols-elven" class="section level2" number="2.2">
-<h2><span class="header-section-number">2.2</span> Lineáris regresszió becslése OLS-elven</h2>
+<div id="lineáris-regresszió-becslése-ols-elven" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> Lineáris regresszió becslése OLS-elven<a href="#line%C3%A1ris-regresszi%C3%B3-becsl%C3%A9se-ols-elven" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Most vegyük elő a lineáris regressziónkat! (Ahol ezt közszemérem-sértés veszélye nélkül megtehetjük.) Azt látjuk, hogy ott eddig a sokaságról beszéltünk, feltettünk egy modellt (<em>ugyanúgy mint az előbbi példában</em>), jó, lehet, hogy egy kicsit bonyolultabbat, de akkor is, ugyanúgy egy sokaságra vonatkozó modell, amiből, megint csak pontosan ugyanúgy mint az előbbi példában, tudunk egy becsült értéket előállítani minden mintaelemhez. Ez lehetővé teszi, hogy az ismeretlen paramétereket OLS-elven megbecsüljük!</p>
-<p>Lássuk a részleteket. A változóink az <span class="math inline">\(\left(Y,X_1,X_2,\ldots,X_k\right)\)</span>, ezekre vegyünk egy <span class="math inline">\(n\)</span> elemű mintát; az <span class="math inline">\(i\)</span>-edik mintaelemet jelölje <span class="math inline">\(\left(Y_i,X_{i1},X_{i2},\ldots,X_{ik}\right)\)</span>. Természetesen a modellünk ezekre is igaz lesz, tehát írhatjuk, hogy
-<span class="math display">\[
-  Y_i = \beta_0 + \beta_1 X_{i1} + \beta_2 X_{i2} + \ldots + \beta_k X_{ik} + \varepsilon_i.
-\]</span>
-Ez minden <span class="math inline">\(i\)</span>-re teljesül, tehát ha nagyon elszántak vagyunk, akkor <span class="math inline">\(n\)</span> ilyen egyenletet írhatnánk fel:
-<span class="math display">\[\begin{align*}
+<p>Lássuk a részleteket. A változóink az <span class="math inline">\(\left(Y,X_1,X_2,\ldots,X_k\right)\)</span>, ezekre vegyünk egy <span class="math inline">\(n\)</span> elemű mintát; az <span class="math inline">\(i\)</span>-edik mintaelemet jelölje <span class="math inline">\(\left(Y_i,X_{i1},X_{i2},\ldots,X_{ik}\right)\)</span>. Természetesen a modellünk ezekre is igaz lesz, tehát írhatjuk, hogy</p>
+<p><span class="math display">\[Y_i = \beta_0 + \beta_1 X_{i1} + \beta_2 X_{i2} + \ldots + \beta_k X_{ik} + \varepsilon_i.\]</span></p>
+<p>Ez minden <span class="math inline">\(i\)</span>-re teljesül, tehát ha nagyon elszántak vagyunk, akkor <span class="math inline">\(n\)</span> ilyen egyenletet írhatnánk fel:</p>
+<p><span class="math display">\[\begin{align*}
   Y_1 &amp;= \beta_0 + \beta_1 X_{11} + \beta_2 X_{12} + \ldots + \beta_k X_{1k} + \varepsilon_1 \\
   Y_2 &amp;= \beta_0 + \beta_1 X_{21} + \beta_2 X_{22} + \ldots + \beta_k X_{2k} + \varepsilon_2 \\
   \ldots \\
   Y_n &amp;= \beta_0 + \beta_1 X_{n1} + \beta_2 X_{n2} + \ldots + \beta_k X_{nk} + \varepsilon_n \\
 \end{align*}\]</span></p>
 <p>Az <span class="math inline">\(i\)</span>-edik mintaelem realizációja az <span class="math inline">\(\left(y_i,x_{i1},x_{i2},\ldots,x_{ik}\right)\)</span>. (A minta egyelőre legyen fae – hogy ez mennyire jó feltevés, arról később még fogunk beszélni.)</p>
-<p>Ha <span class="math inline">\(b_0, b_1, \ldots, b_k\)</span>-val jelöljük a feltételezett sokasági paramétereket, akkor a becslés
-<span class="math display">\[
-  \widehat{y_i}=b_0 + b_1 x_{i1} + b_2 x_{i2} + \ldots + b_k x_{ik}
-\]</span>
-lesz az <span class="math inline">\(i\)</span>-edik mintaelemre. (Itt szerencsére nincs mit gondolkozni, hiszen azt az előző fejezetben részletesen levezettük, hogy ez lesz a legjobb becslés adott <span class="math inline">\(\mathbf{x}\)</span> mellett.)</p>
-<p>Most hogy megvannak a becsült értékek (<span class="math inline">\(\widehat{y_i}\)</span>) és a tényleges értékek (<span class="math inline">\(y_i\)</span>), betű szerint ugyanazt az optimalizációs feladatot kell felírnunk, mint az előbb, csak <span class="math inline">\(\widehat{y_i}\)</span> lesz kicsit hosszabb, ha kifejtjük:
-<span class="math display">\[\begin{align*}
-        &amp;\left(\widehat{\beta_0},\widehat{\beta_1},\widehat{\beta_2},\ldots,\widehat{\beta_k}\right)=\argmin_{b_0,b_1,b_2,\ldots,b_k} \sum_{i=1}^n \left(y_i-\widehat{y_i}\right)^2=\\
-        &amp;=\argmin_{b_0,b_1,b_2,\ldots,b_k} \sum_{i=1}^n \left[y_i-\left(b_0 + b_1 x_{i1} + b_2 x_{i2} + \ldots + b_k x_{ik}\right)\right]^2
-\end{align*}\]</span>
-Annyi bonyolódottság van, hogy itt most <em>több</em> paramétert kell becsülni, de ez csak a kivitelezést nehezíti, elvileg teljesen ugyanaz a feladat.</p>
+<p>Ha <span class="math inline">\(b_0, b_1, \ldots, b_k\)</span>-val jelöljük a feltételezett sokasági paramétereket, akkor a becslés</p>
+<p><span class="math display">\[\widehat{y_i}=b_0 + b_1 x_{i1} + b_2 x_{i2} + \ldots + b_k x_{ik}\]</span></p>
+<p>lesz az <span class="math inline">\(i\)</span>-edik mintaelemre. (Itt szerencsére nincs mit gondolkozni, hiszen azt az előző fejezetben részletesen levezettük, hogy ez lesz a legjobb becslés adott <span class="math inline">\(\mathbf{x}\)</span> mellett.)</p>
+<p>Most hogy megvannak a becsült értékek (<span class="math inline">\(\widehat{y_i}\)</span>) és a tényleges értékek (<span class="math inline">\(y_i\)</span>), betű szerint ugyanazt az optimalizációs feladatot kell felírnunk, mint az előbb, csak <span class="math inline">\(\widehat{y_i}\)</span> lesz kicsit hosszabb, ha kifejtjük:</p>
+<p><span class="math display">\[\begin{align*}
+        &amp;\left(\widehat{\beta_0},\widehat{\beta_1},\widehat{\beta_2},\ldots,\widehat{\beta_k}\right)=\underset{b_0,b_1,b_2,\ldots,b_k}{\mathrm{argmin}}\,\sum_{i=1}^n \left(y_i-\widehat{y_i}\right)^2=\\
+        &amp;=\underset{b_0,b_1,b_2,\ldots,b_k}{\mathrm{argmin}}\,\sum_{i=1}^n \left[y_i-\left(b_0 + b_1 x_{i1} + b_2 x_{i2} + \ldots + b_k x_{ik}\right)\right]^2
+\end{align*}\]</span></p>
+<p>Annyi bonyolódottság van, hogy itt most <em>több</em> paramétert kell becsülni, de ez csak a kivitelezést nehezíti, elvileg teljesen ugyanaz a feladat.</p>
 <p>Össze ne keverjük <span class="math inline">\(\beta_i\)</span>-t, <span class="math inline">\(b_i\)</span>-t és <span class="math inline">\(\widehat{\beta_i}\)</span>-t! <span class="math inline">\(\beta_i\)</span> a kérdéses sokasági paraméter valódi, tényleges értéke, egy adott, konkrét szám (csak mi nem tudjuk mennyi), <span class="math inline">\(b_i\)</span> egy általunk feltélezett érték rá, mi állítjuk be, választhatunk nagy számot is, kis számot is, tetszés szerint, a fenti optimalizációban végig fogunk vele futni az összes lehetséges értékén, <span class="math inline">\(\widehat{\beta_i}\)</span> pedig a megoldásként kapott <em>legjobb tippünk</em> <span class="math inline">\(\beta_i\)</span>-re, de ettől még csak tipp, azaz eloszlása lesz, hiszen a mintától is függeni fog, mintáról mintára ingadozni fog (miközben a valódi érték ugyebár állandó – ez lesz a mintavételi hiba forrása).</p>
-<p>Ezt az optimalizációs problémát kell tehát most megoldanunk. Ezt megtehetnénk a fenti formában is, de célszerűbb, ha már most áttérünk a vektoros/mátrixos jelölésekre. Ez eleinte kicsit kényelmetlennek tűnhet, de a magasabb absztrakciós szint később ki fog fizetődni: lehet, hogy most kicsit nehezebben indulunk, de a cserében a bonyolultabb problémák sem lesznek sokkal nehezebbek.</p>
-<p>Fogjunk tehát össze mindent értelemszerű vektorokba és mátrixokba! A jelölésrendszer teljes bemutatása végett felírom a mintavétel előtti – valószínűségi változós – és a realizálódott értékes alakokat is<a href="#fn10" class="footnote-ref" id="fnref10"><sup>10</sup></a>. Az eredményváltozók:
-<span class="math display">\[
-  \mathbf{y}=\begin{pmatrix}y_1\\y_2\\ \cdots \\ y_n\end{pmatrix}, \underline{Y}=\begin{pmatrix}Y_1\\Y_2\\ \cdots \\ Y_n\end{pmatrix}
-\]</span>
-A magyarázó változókat nyilván mátrixba kell összefogni, de itt egy kis cselre lesz szükségünk: hozzáveszünk az elejéhez egy csupa 1 oszlopot. (Az így kapott mátrixot a regresszió <strong>design mátrixának</strong> szokás nevezni.) Íme:
-<span class="math display">\[
-  \mathbf{X}=\begin{pmatrix}1&amp;x_{11}&amp; x_{12}&amp; \cdots&amp; x_{1k}\\1&amp;x_{21} &amp;x_{22}&amp; \cdots &amp;x_{2k}\\ \vdots&amp;\vdots&amp; \vdots &amp;\ddots &amp;\vdots \\ 1&amp; x_{n1}&amp; x_{n2}&amp; \cdots &amp;x_{nk}\end{pmatrix}, \uuline{X}=\begin{pmatrix}1&amp;X_{11}&amp; X_{12}&amp; \cdots&amp; X_{1k}\\1&amp;X_{21} &amp;X_{22}&amp; \cdots &amp;X_{2k}\\ \vdots&amp;\vdots&amp; \vdots &amp;\ddots &amp;\vdots \\ 1&amp; X_{n1}&amp; X_{n2}&amp; \cdots &amp;X_{nk}\end{pmatrix}
-\]</span>
-Ez a csupa 1 oszlop azért lesz célszerű, mert ha a regressziós koefficienseket egy
-<span class="math display">\[
-  \pmb{\beta}=\begin{pmatrix}\beta_0\\ \beta_1\\ \cdots \\ \beta_k\end{pmatrix}
-\]</span>
-vektorba, a hibatagokbat pedig egy
-<span class="math display">\[
-  \pmb{\varepsilon}=\begin{pmatrix}\varepsilon_1\\ \varepsilon_1\\ \cdots \\ \varepsilon_k\end{pmatrix}
-\]</span>
-vektorba fogjuk össze, akkor a korábbi, <span class="math inline">\(n\)</span> darab egyenletből álló, igencsak terjengős felírás helyett nemes egyszerűséggel ezt írhatjuk:
-<span class="math display">\[
-  \underline{Y}=\uuline{X} \pmb{\beta} + \pmb{\varepsilon}.
-\]</span>
-És ennyi, pontosan ugyanaz van leírva!</p>
+<p>Ezt az optimalizációs problémát kell tehát most megoldanunk. Ezt megtehetnénk a fenti formában is, de célszerűbb, ha már most áttérünk a vektoros/mátrixos jelölésekre. Ez eleinte kicsit kényelmetlennek tűnhet, de a magasabb absztrakciós szint később ki fog fizetődni: lehet, hogy most kicsit nehezebben indulunk, de cserében a bonyolultabb problémák sem lesznek sokkal nehezebbek.</p>
+<p>Fogjunk tehát össze mindent értelemszerű vektorokba és mátrixokba! A jelölésrendszer teljes bemutatása végett felírom a mintavétel előtti – valószínűségi változós – és a realizálódott értékes alakokat is<a href="#fn10" class="footnote-ref" id="fnref10"><sup>10</sup></a>. Az eredményváltozók:</p>
+<p><span class="math display">\[\mathbf{y}=\begin{pmatrix}y_1\\y_2\\ \cdots \\ y_n\end{pmatrix}, \underline{Y}=\begin{pmatrix}Y_1\\Y_2\\ \cdots \\ Y_n\end{pmatrix}.\]</span></p>
+<p>A magyarázó változókat nyilván mátrixba kell összefogni, de itt egy kis cselre lesz szükségünk: hozzáveszünk az elejéhez egy csupa 1 oszlopot. (Az így kapott mátrixot a regresszió <strong>design mátrixának</strong> szokás nevezni.) Íme:</p>
+<p><span class="math display">\[\mathbf{X}=\begin{pmatrix}1&amp;x_{11}&amp; x_{12}&amp; \cdots&amp; x_{1k}\\1&amp;x_{21} &amp;x_{22}&amp; \cdots &amp;x_{2k}\\ \vdots&amp;\vdots&amp; \vdots &amp;\ddots &amp;\vdots \\ 1&amp; x_{n1}&amp; x_{n2}&amp; \cdots &amp;x_{nk}\end{pmatrix}, \underline{\underline{X}}=\begin{pmatrix}1&amp;X_{11}&amp; X_{12}&amp; \cdots&amp; X_{1k}\\1&amp;X_{21} &amp;X_{22}&amp; \cdots &amp;X_{2k}\\ \vdots&amp;\vdots&amp; \vdots &amp;\ddots &amp;\vdots \\ 1&amp; X_{n1}&amp; X_{n2}&amp; \cdots &amp;X_{nk}\end{pmatrix}.\]</span></p>
+<p>Ez a csupa 1 oszlop azért lesz célszerű, mert ha a regressziós koefficienseket egy</p>
+<p><span class="math display">\[\pmb{\beta}=\begin{pmatrix}\beta_0\\ \beta_1\\ \cdots \\ \beta_k\end{pmatrix}\]</span></p>
+<p>vektorba, a hibatagokbat pedig egy</p>
+<p><span class="math display">\[\pmb{\varepsilon}=\begin{pmatrix}\varepsilon_1\\ \varepsilon_1\\ \cdots \\ \varepsilon_k\end{pmatrix}\]</span></p>
+<p>vektorba fogjuk össze, akkor a korábbi, <span class="math inline">\(n\)</span> darab egyenletből álló, igencsak terjengős felírás helyett nemes egyszerűséggel ezt írhatjuk:</p>
+<p><span class="math display">\[\underline{Y}=\underline{\underline{X}} \pmb{\beta} + \pmb{\varepsilon}.\]</span></p>
+<p>És ennyi, pontosan ugyanaz van leírva!</p>
 <p>Látható tehát, hogy a csupa 1 oszlop azért kellett, hogy a vektorral való rászorzásnál az legyen a <span class="math inline">\(\beta_0\)</span> szorzója, így az egyenletben tényleg egyszerűen <span class="math inline">\(\beta_0\)</span> fog megjelenni.</p>
-<p>Menjünk most vissza az OLS optimalizációs problémájára! Ezekkel a jelölésekkel a kezünkben ugyanis azt is sokkal egyszerűbben felírhatjuk:
-<span class="math display">\[
-        \argmin_{\mathbf{b}} \widehat{\mathbf{y}}^T \widehat{\mathbf{y}} = \argmin_{\mathbf{b}} \left(\mathbf{y}-\mathbf{X}\mathbf{b}\right)^T \left(\mathbf{y}-\mathbf{X}\mathbf{b}\right),
-\]</span>
-hiszen számok négyzetösszegét megkapjuk, ha összefogjuk őket egy vektorba, és vesszük ezen vektor saját transzponáltjával vett szorzatát. (<span class="math inline">\(\widehat{\mathbf{y}}\)</span> és <span class="math inline">\(\mathbf{b}\)</span> az értelemszerű vektorok, <span class="math inline">\(\widehat{y_i}\)</span>-ket és <span class="math inline">\(b_i\)</span>-ket fogják össze.)</p>
+<p>Menjünk most vissza az OLS optimalizációs problémájára! Ezekkel a jelölésekkel a kezünkben ugyanis azt is sokkal egyszerűbben felírhatjuk:</p>
+<p><span class="math display">\[\underset{\mathbf{b}}{\mathrm{argmin}}\,\widehat{\mathbf{y}}^T \widehat{\mathbf{y}} = \underset{\mathbf{b}}{\mathrm{argmin}}\, \left(\mathbf{y}-\mathbf{X}\mathbf{b}\right)^T \left(\mathbf{y}-\mathbf{X}\mathbf{b}\right),\]</span></p>
+<p>hiszen számok négyzetösszegét megkapjuk, ha összefogjuk őket egy vektorba, és vesszük ezen vektor saját transzponáltjával vett szorzatát. (<span class="math inline">\(\widehat{\mathbf{y}}\)</span> és <span class="math inline">\(\mathbf{b}\)</span> az értelemszerű vektorok, <span class="math inline">\(\widehat{y_i}\)</span>-ket és <span class="math inline">\(b_i\)</span>-ket fogják össze.)</p>
 <p>Az <span class="math inline">\(\left(\mathbf{y}-\mathbf{X}\mathbf{b}\right)^T \left(\mathbf{y}-\mathbf{X}\mathbf{b}\right)\)</span> hibanégyzetösszeget <span class="math inline">\(ESS\)</span>-sel (error sum of squares) is fogjuk jelölni<a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a>.</p>
-<p>És akkor essünk neki: oldjuk meg ezt az optimalizációt! Először alakítsuk át a célfüggvényt, bontsuk fel a zárójeleket:
-<span class="math display">\[
-    \argmin_{\mathbf{b}} \left(\mathbf{y}-\mathbf{X}\mathbf{b}\right)^T\left(\mathbf{y}-\mathbf{X}\mathbf{b}\right)=\argmin_{\mathbf{b}} \left[\mathbf{y}^T \mathbf{y}-2\mathbf{b}^T\mathbf{X}^T\mathbf{y}+\mathbf{b}^T\mathbf{X}^T\mathbf{X}\mathbf{b}\right].
-\]</span>
-Itt egyszerű algebrai átalakításokat végzünk (és a definíciókat használjuk), hiszen a zárójeleket felbontani, műveleteket elvégezni, mátrixokkal/vektorokkal is hasonlóan kell mint valós számokkal. (A transzponálás tagonként elvégezhető, azaz <span class="math inline">\(\left(\mathbf{a}-\mathbf{b}\right)^T=\mathbf{a}^T-\mathbf{b}^T\)</span>.) Egyedül annyit kell észrevenni, hogy a <span class="math inline">\(\mathbf{y}^T\mathbf{X}\mathbf{b}\)</span> egy egyszerű valós szám, ezért megegyezik a saját transzponáltjával, <span class="math inline">\(\mathbf{b}^T\mathbf{X}^T\mathbf{y}\)</span>-nal. Ezért írhattunk <span class="math inline">\(-\left(\mathbf{X}\mathbf{b}\right)^T\mathbf{y}-\mathbf{y}^T\mathbf{X}\mathbf{b}\)</span> helyett egyszerűen – például – <span class="math inline">\(-2\mathbf{b}^T\mathbf{X}^T\mathbf{y}\)</span>-t. (Itt mindenhol felhasználtuk, hogy a transzponálás megfordítja a szorzás sorrendjét: <span class="math inline">\(\left(\mathbf{A}\mathbf{B}\right)^T=\mathbf{A}^T\mathbf{B}^T\)</span>.)</p>
-<p>Most jön a minimum megkeresése. Az ember rávágja, hogy deriválni kell, de itt ez picit zűrősebb, hiszen a függvényünk többváltozós (ráadásul az is határozatlan, hogy pontosan hányváltozós). Itt jelentkezik igazán a mátrixos jelölésrendszer előnye. A <span class="math inline">\(\mathbf{y}^T \mathbf{y}-2\mathbf{y}^T\mathbf{X}\mathbf{b}+\mathbf{b}^T\mathbf{X}^T\mathbf{X}\mathbf{b}\)</span> lényegében egy ,,másodfokú kifejezés’’ többváltozós értelemben (az <span class="math inline">\(ax^2+bx+c\)</span> többváltozós megfelelője), és ami igazán szép: pont ahogy az <span class="math inline">\(ax^2+bx+c\)</span> lederiválható a változója (<span class="math inline">\(x\)</span>) szerint (eredmény <span class="math inline">\(2ax+b\)</span>), ugyanúgy ez is lederiválható a változója (azaz <span class="math inline">\(\mathbf{b}\)</span>) szerint… és az eredmény az egyváltozóssal teljesen analóg lesz, ahogy fent is látható! (Ez persze bizonyítást igényel! – lásd többváltozós analízisből.) Bár ezzel átléptünk egyváltozóról többváltozóra, a többváltozós analízisbeli eredmények biztosítanak róla, hogy formálisan ugyanúgy végezhető el a deriválás. (Ezt írja le röviden a ,,vektor szerinti deriválás’’ jelölése. Egy <span class="math inline">\(\mathbf{b}\)</span> vektor szerinti derivált alatt azt a vektort értjük, melyet úgy kapunk, hogy a deriválandó kifejezést lederiváljuk <span class="math inline">\(\mathbf{b}\)</span> egyes <span class="math inline">\(b_i\)</span> komponensei szerint – ez ugye egyszerű skalár szerinti deriválás, ami már definiált! –, majd ez eredményeket összefogjuk egy vektorba. Látható tehát, hogy a vektor szerinti derivált egy ugyanolyan dimenziós vektor, mint ami szerint deriváltunk.) Ami igazán erőteljes ebben az eredményben, az nem is egyszerűen az, hogy ,,több’’ változónk van, hanem, hogy nem is kell tudnunk, hogy mennyi – mégis, általában is működik! Az eredmény tehát:
-<span class="math display">\[\begin{align*}
+<p>És akkor essünk neki: oldjuk meg ezt az optimalizációt! Először alakítsuk át a célfüggvényt, bontsuk fel a zárójeleket:</p>
+<p><span class="math display">\[\underset{\mathbf{b}}{\mathrm{argmin}}\,\left(\mathbf{y}-\mathbf{X}\mathbf{b}\right)^T\left(\mathbf{y}-\mathbf{X}\mathbf{b}\right)=\underset{\mathbf{b}}{\mathrm{argmin}}\,\left[\mathbf{y}^T \mathbf{y}-2\mathbf{b}^T\mathbf{X}^T\mathbf{y}+\mathbf{b}^T\mathbf{X}^T\mathbf{X}\mathbf{b}\right].\]</span></p>
+<p>Itt egyszerű algebrai átalakításokat végzünk (és a definíciókat használjuk), hiszen a zárójeleket felbontani, műveleteket elvégezni, mátrixokkal/vektorokkal is hasonlóan kell mint valós számokkal. (A transzponálás tagonként elvégezhető, azaz <span class="math inline">\(\left(\mathbf{a}-\mathbf{b}\right)^T=\mathbf{a}^T-\mathbf{b}^T\)</span>.) Egyedül annyit kell észrevenni, hogy a <span class="math inline">\(\mathbf{y}^T\mathbf{X}\mathbf{b}\)</span> egy egyszerű valós szám, ezért megegyezik a saját transzponáltjával, <span class="math inline">\(\mathbf{b}^T\mathbf{X}^T\mathbf{y}\)</span>-nal. Ezért írhattunk <span class="math inline">\(-\left(\mathbf{X}\mathbf{b}\right)^T\mathbf{y}-\mathbf{y}^T\mathbf{X}\mathbf{b}\)</span> helyett egyszerűen – például – <span class="math inline">\(-2\mathbf{b}^T\mathbf{X}^T\mathbf{y}\)</span>-t. (Itt mindenhol felhasználtuk, hogy a transzponálás megfordítja a szorzás sorrendjét: <span class="math inline">\(\left(\mathbf{A}\mathbf{B}\right)^T=\mathbf{A}^T\mathbf{B}^T\)</span>.)</p>
+<p>Most jön a minimum megkeresése. Az ember rávágja, hogy deriválni kell, de itt ez picit zűrősebb, hiszen a függvényünk többváltozós (ráadásul az is határozatlan, hogy pontosan hányváltozós). Itt jelentkezik igazán a mátrixos jelölésrendszer előnye. A <span class="math inline">\(\mathbf{y}^T \mathbf{y}-2\mathbf{y}^T\mathbf{X}\mathbf{b}+\mathbf{b}^T\mathbf{X}^T\mathbf{X}\mathbf{b}\)</span> lényegében egy <q>másodfokú kifejezés</q> többváltozós értelemben (az <span class="math inline">\(ax^2+bx+c\)</span> többváltozós megfelelője), és ami igazán szép: pont ahogy az <span class="math inline">\(ax^2+bx+c\)</span> lederiválható a változója (<span class="math inline">\(x\)</span>) szerint (eredmény <span class="math inline">\(2ax+b\)</span>), ugyanúgy ez is lederiválható a változója (azaz <span class="math inline">\(\mathbf{b}\)</span>) szerint… és az eredmény az egyváltozóssal teljesen analóg lesz, ahogy fent is látható! (Ez persze bizonyítást igényel! – lásd többváltozós analízisből.) Bár ezzel átléptünk egyváltozóról többváltozóra, a többváltozós analízisbeli eredmények biztosítanak róla, hogy formálisan ugyanúgy végezhető el a deriválás. (Ezt írja le röviden a <q>vektor szerinti deriválás</q> jelölése. Egy <span class="math inline">\(\mathbf{b}\)</span> vektor szerinti derivált alatt azt a vektort értjük, melyet úgy kapunk, hogy a deriválandó kifejezést lederiváljuk <span class="math inline">\(\mathbf{b}\)</span> egyes <span class="math inline">\(b_i\)</span> komponensei szerint – ez ugye egyszerű skalár szerinti deriválás, ami már definiált! –, majd ez eredményeket összefogjuk egy vektorba. Látható tehát, hogy a vektor szerinti derivált egy ugyanolyan dimenziós vektor, mint ami szerint deriváltunk.) Ami igazán erőteljes ebben az eredményben, az nem is egyszerűen az, hogy <q>több</q> változónk van, hanem, hogy nem is kell tudnunk, hogy mennyi – mégis, általában is működik! Az eredmény tehát:</p>
+<p><span class="math display">\[\begin{align*}
         &amp;\frac{\partial}{\partial \mathbf{b}} \left[\mathbf{y}^T \mathbf{y}-2\mathbf{b}^T\mathbf{X}^T\mathbf{y}+\mathbf{b}^T\mathbf{X}^T\mathbf{X}\mathbf{b}\right]=\\
         &amp;=-2\mathbf{X}^T\mathbf{y}+2\mathbf{X}^T\mathbf{X}\mathbf{b}=0 \Rightarrow \widehat{\pmb{\beta}_{\mathrm{OLS}}}=\left(\mathbf{X}^T\mathbf{X}\right)^{-1}\mathbf{X}^T\mathbf{y},
-\end{align*}\]</span>
-ha <span class="math inline">\(\mathbf{X}^T\mathbf{X}\)</span> nem szinguláris.</p>
-<p>Azt, hogy a megtalált stacionaritási pont tényleg minimumhely, úgy ellenőrizhetjük, hogy megvizsgáljuk a Hesse-mátrixot a pontban. A mátrixos jelölésrendszerben ennek az előállítása is egyszerű, még egyszer deriválni kell a függvényt a változó(vektor) szerint:
-<span class="math display">\[
-    \frac{\partial^2}{\partial \mathbf{b}^2}  \left[\mathbf{y}^T \mathbf{y}-2\mathbf{b}^T\mathbf{X}^T\mathbf{y}+\mathbf{b}^T\mathbf{X}^T\mathbf{X}\mathbf{b}\right] = \frac{\partial}{\partial \mathbf{b}} \left[ -2\mathbf{X}^T\mathbf{y}+2\mathbf{X}^T\mathbf{X}\mathbf{b} \right]= 2\mathbf{X}^T\mathbf{X}.
-\]</span>
-Az ismert tétel szerint a függvénynek akkor van egy pontban ténylegesen is (lokális, de a konvexitás miatt egyben globális) minimuma, ha ott a Hesse-mátrix pozitív definit. Esetünkben ez minden pontban teljesül. A <span class="math inline">\(\mathbf{X}^T\mathbf{X}\)</span> ugyanis pozitív szemidefinit (ez egy skalárszorzat-mátrix, más néven Gram-mátrix, amelyek mindig pozitív szemidefinitek), a kérdés tehát csak a határozott definitség. Belátható azonban, hogy ennek feltétele, hogy <span class="math inline">\(\mathbf{X}^T\mathbf{X}\)</span> ne legyen szinguláris – azaz itt is ugyanahhoz a feltételhez értünk! Megjegyezzük, hogy ez pontosan akkor valósul meg, ha az <span class="math inline">\(\mathbf{X}\)</span> teljes oszloprangú. (Erre a kérdésre a modellfeltevések tárgyalásakor még visszatérünk.)</p>
+\end{align*}\]</span></p>
+<p>ha <span class="math inline">\(\mathbf{X}^T\mathbf{X}\)</span> nem szinguláris.</p>
+<p>Azt, hogy a megtalált stacionaritási pont tényleg minimumhely, úgy ellenőrizhetjük, hogy megvizsgáljuk a Hesse-mátrixot a pontban. A mátrixos jelölésrendszerben ennek az előállítása is egyszerű, még egyszer deriválni kell a függvényt a változó(vektor) szerint:</p>
+<p><span class="math display">\[\frac{\partial^2}{\partial \mathbf{b}^2}  \left[\mathbf{y}^T \mathbf{y}-2\mathbf{b}^T\mathbf{X}^T\mathbf{y}+\mathbf{b}^T\mathbf{X}^T\mathbf{X}\mathbf{b}\right] = \frac{\partial}{\partial \mathbf{b}} \left[ -2\mathbf{X}^T\mathbf{y}+2\mathbf{X}^T\mathbf{X}\mathbf{b} \right]= 2\mathbf{X}^T\mathbf{X}.\]</span></p>
+<p>Az ismert tétel szerint a függvénynek akkor van egy pontban ténylegesen is (lokális, de a konvexitás miatt egyben globális) minimuma, ha ott a Hesse-mátrix pozitív definit. Esetünkben ez minden pontban teljesül. A <span class="math inline">\(\mathbf{X}^T\mathbf{X}\)</span> ugyanis pozitív szemidefinit (ez egy skalárszorzat-mátrix, más néven Gram-mátrix, amelyek mindig pozitív szemidefinitek), a kérdés tehát csak a határozott definitség. Belátható azonban, hogy ennek feltétele, hogy <span class="math inline">\(\mathbf{X}^T\mathbf{X}\)</span> ne legyen szinguláris – azaz itt is ugyanahhoz a feltételhez értünk! Megjegyezzük, hogy ez pontosan akkor valósul meg, ha az <span class="math inline">\(\mathbf{X}\)</span> teljes oszloprangú. (Erre a kérdésre a modellfeltevések tárgyalásakor még visszatérünk.)</p>
 <p>Végül egy számítástechnikai megjegyzés: az együtthatók számításánál a fenti formula direkt követése általában nem a legjobb út, különösen ha sok megfigyelési egység és/vagy változó van. Ekkor nagyméretű mátrixot kéne invertálni, amit numerikus okokból (kerekítési hibák, numerikus instabilitás stb.) általában nem szeretünk. Ehelyett, a különféle programok igyekeznek a direkt mátrixinverziót elkerülni, tipikusan az <span class="math inline">\(\mathbf{X}\)</span> valamilyen célszerű mátrix dekompozíciójával (QR-dekompozíció, Cholesky-dekompozíció). Extrém esetekben még az is elképzelhető, hogy az egzakt, zárt alakú megoldás előállítása helyett valamilyen iteratív optimalizálási algoritmus (gradiens módszer, Newton–Raphson-módszer) alkalmazása a gyakorlatban járható út, annak ellenére is, hogy elvileg van zárt alakban megoldása.</p>
 <p>A kapott eredmény nem más, mintha <span class="math inline">\(\mathbf{X}\)</span> Moore-Penrose pszeudoinverzével szoroznánk <span class="math inline">\(\mathbf{y}\)</span>-t.</p>
 <p>TODO</p>
 <p>Végezzük el a fenti műveleteket közvetlenül lekódolva R-ben a már látott kaliforniai iskolás példára, ha a pontszámot a tanár:diák arányt a pontszámmal és a jövedelemmel regresszáljuk:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="regresszió-a-mintában-következtetés.html#cb2-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> CASchools<span class="sc">$</span>score</span>
-<span id="cb2-2"><a href="regresszió-a-mintában-következtetés.html#cb2-2" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">cbind</span>( <span class="dv">1</span>, CASchools<span class="sc">$</span>tsratio, CASchools<span class="sc">$</span>income )</span>
-<span id="cb2-3"><a href="regresszió-a-mintában-következtetés.html#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">solve</span>( <span class="fu">t</span>(X)<span class="sc">%*%</span>X )<span class="sc">%*%</span><span class="fu">t</span>(X)<span class="sc">%*%</span>y</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="regresszió-a-mintában-következtetés.html#cb2-1" tabindex="-1"></a>y <span class="ot">&lt;-</span> CASchools<span class="sc">$</span>score</span>
+<span id="cb2-2"><a href="regresszió-a-mintában-következtetés.html#cb2-2" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">cbind</span>( <span class="dv">1</span>, CASchools<span class="sc">$</span>tsratio, CASchools<span class="sc">$</span>income )</span>
+<span id="cb2-3"><a href="regresszió-a-mintában-következtetés.html#cb2-3" tabindex="-1"></a><span class="fu">solve</span>( <span class="fu">t</span>(X)<span class="sc">%*%</span>X )<span class="sc">%*%</span><span class="fu">t</span>(X)<span class="sc">%*%</span>y</span></code></pre></div>
 <pre><code>##       [,1]
 ## [1,] 614.0
 ## [2,] 233.4
 ## [3,]   1.8</code></pre>
 <p>Egy mátrixot a <code>t</code> függvénnyel transzponálhatunk és a <code>solve</code> függvénnyel invertálhatunk, a <code>cbind</code> pedig vektorokat, mint oszlopvektorokat fűz egybe mátrixszá. (Valaki megkérdezheti, hogy akkor az <code>1</code> miért működik, hiszen az nem vektor: ez az R egyik jellemző – kétélű fegyverként viselkedő – tulajdonsága: megengedi a trehányságot, ugyanis érzékeli, hogy mi a helyzet, és automatikusan egymás alá rakja annyiszor, mint amilyen hosszúak a többi vektorok.)</p>
 <p>Természetesen az R tartalmaz beépített parancsot regressziók becslésére:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="regresszió-a-mintában-következtetés.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lm</span>( score <span class="sc">~</span> tsratio <span class="sc">+</span> income, <span class="at">data =</span> CASchools)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="regresszió-a-mintában-következtetés.html#cb4-1" tabindex="-1"></a><span class="fu">lm</span>( score <span class="sc">~</span> tsratio <span class="sc">+</span> income, <span class="at">data =</span> CASchools)</span></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = score ~ tsratio + income, data = CASchools)
@@ -400,7 +369,6 @@ alt="ingyen webstatisztika"></a></div></noscript>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -411,37 +379,42 @@ alt="ingyen webstatisztika"></a></div></noscript>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": false,
-"facebook": true,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": "https://github.com/tamas-ferenci/FerenciTamas_Okonometria/edit/master/02-regresszioamintabankovetkeztetes.Rmd",
-"text": "Szerkesztés"
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": ["FerenciTamas_Okonometria.pdf", "FerenciTamas_Okonometria.epub"],
-"toc": {
-"collapse": "subsection"
-}
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/tamas-ferenci/FerenciTamas_Okonometria/edit/master/02-regresszioamintabankovetkeztetes.Rmd",
+    "text": "Szerkesztés"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["FerenciTamas_Okonometria.pdf", "FerenciTamas_Okonometria.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
 });
 });
 </script>
@@ -452,7 +425,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

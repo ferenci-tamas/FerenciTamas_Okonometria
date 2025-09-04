@@ -1,8 +1,6 @@
 bookdown::gitbook:
-  pandoc_args: ["--lua-filter", "handoutconverter.lua", "--html-q-tags"]
-  css: style.css
+  pandoc_args: ["--html-q-tags"]
   includes:
-    in_header: GATamasFerenciGithubIo.html
     after_body: statcounter.html
   config:
     toc:
@@ -13,16 +11,5 @@ bookdown::gitbook:
     edit: https://github.com/tamas-ferenci/FerenciTamas_Okonometria/edit/master/%s
     download: ["pdf", "epub"]
 bookdown::pdf_book:
-  includes:
-    in_header: ["preamble.tex", "preamble_pdf.tex"]
-  latex_engine: lualatex
+  fig_crop: false
 bookdown::epub_book: default
-beamer_presentation:
-  pandoc_args: ["--lua-filter", "handoutconverter.lua"]
-  includes:
-    in_header: ["preamble.tex", "preamble_handout.tex"]
-  latex_engine: lualatex
-  theme: "Madrid"
-  colortheme: "orchid"
-  toc: true
-  slide_level: 2

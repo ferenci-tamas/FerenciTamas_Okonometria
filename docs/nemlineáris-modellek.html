@@ -6,11 +6,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>4 . fejezet Nemlineáris modellek | Ökonometria</title>
   <meta name="description" content="Az ökonometria a társadalmi-gazdasági jelenségek kvantitatív, empirikus vizsgálatának, modellezésének tudománya. A jegyzet ezt tárgyalja, kerülve a mély matematikai részleteket, a hangsúlyt inkább a módszerek sokféleségének bemutatására helyezve. A számításokat mindenhol R statisztikai környezet alatt szemlélti." />
-  <meta name="generator" content="bookdown 0.21 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.44 and GitBook 2.6.7" />
 
   <meta property="og:title" content="4 . fejezet Nemlineáris modellek | Ökonometria" />
   <meta property="og:type" content="book" />
-  <meta property="og:url" content="https://tamas-ferenci.github.io/FerenciTamas_Okonometria/" />
   <meta property="og:image" content="https://tamas-ferenci.github.io/FerenciTamas_Okonometria/FerenciTamas_Okonometria_cover.png" />
   <meta property="og:description" content="Az ökonometria a társadalmi-gazdasági jelenségek kvantitatív, empirikus vizsgálatának, modellezésének tudománya. A jegyzet ezt tárgyalja, kerülve a mély matematikai részleteket, a hangsúlyt inkább a módszerek sokféleségének bemutatására helyezve. A számításokat mindenhol R statisztikai környezet alatt szemlélti." />
   <meta name="github-repo" content="tamas-ferenci/FerenciTamas_Okonometria" />
@@ -32,8 +31,8 @@
   
 <link rel="prev" href="kategoriális-magyarázó-változók.html"/>
 
-<script src="libs/header-attrs-2.6/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -49,22 +48,16 @@
 
 
 
-
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-19799395-2"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-19799395-2');
-</script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 <style type="text/css">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
@@ -72,7 +65,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -98,7 +91,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -111,7 +104,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -125,7 +118,11 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<link rel="stylesheet" href="style.css" type="text/css" />
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
 </head>
 
 <body>
@@ -141,89 +138,89 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">Ferenci Tamás: Ökonometria</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Előszó</a></li>
-<li class="chapter" data-level="1" data-path="út-a-többváltozós-regresszióhoz.html"><a href="út-a-többváltozós-regresszióhoz.html"><i class="fa fa-check"></i><b>1</b> Út a többváltozós regresszióhoz</a>
+<li class="chapter" data-level="" data-path=""><a href="#el%C5%91sz%C3%B3"><i class="fa fa-check"></i>Előszó</a></li>
+<li class="chapter" data-level="1" data-path="04-nemlinearismodellek.html"><a href="#%C3%BAt-a-t%C3%B6bbv%C3%A1ltoz%C3%B3s-regresszi%C3%B3hoz"><i class="fa fa-check"></i><b>1</b> Út a többváltozós regresszióhoz</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="út-a-többváltozós-regresszióhoz.html"><a href="út-a-többváltozós-regresszióhoz.html#történetünk-első-szála-néhány-motiváló-példa"><i class="fa fa-check"></i><b>1.1</b> Történetünk első szála: néhány motiváló példa</a>
+<li class="chapter" data-level="1.1" data-path="04-nemlinearismodellek.html"><a href="#t%C3%B6rt%C3%A9net%C3%BCnk-els%C5%91-sz%C3%A1la-n%C3%A9h%C3%A1ny-motiv%C3%A1l%C3%B3-p%C3%A9lda"><i class="fa fa-check"></i><b>1.1</b> Történetünk első szála: néhány motiváló példa</a>
 <ul>
-<li class="chapter" data-level="1.1.1" data-path="út-a-többváltozós-regresszióhoz.html"><a href="út-a-többváltozós-regresszióhoz.html#hogyan-hat-az-osztálylétszám-a-tanulók-teljesítményére"><i class="fa fa-check"></i><b>1.1.1</b> Hogyan hat az osztálylétszám a tanulók teljesítményére?</a></li>
-<li class="chapter" data-level="1.1.2" data-path="út-a-többváltozós-regresszióhoz.html"><a href="út-a-többváltozós-regresszióhoz.html#csökkenti-e-a-korrupció-mértékét-a-nők-részvétele-a-politikában"><i class="fa fa-check"></i><b>1.1.2</b> Csökkenti-e a korrupció mértékét a nők részvétele a politikában?</a></li>
-<li class="chapter" data-level="1.1.3" data-path="út-a-többváltozós-regresszióhoz.html"><a href="út-a-többváltozós-regresszióhoz.html#csalnak-e-az-orosz-választásokon"><i class="fa fa-check"></i><b>1.1.3</b> Csalnak-e az orosz választásokon?</a></li>
-<li class="chapter" data-level="1.1.4" data-path="út-a-többváltozós-regresszióhoz.html"><a href="út-a-többváltozós-regresszióhoz.html#további-példák"><i class="fa fa-check"></i><b>1.1.4</b> További példák</a></li>
+<li class="chapter" data-level="1.1.1" data-path="04-nemlinearismodellek.html"><a href="#hogyan-hat-az-oszt%C3%A1lyl%C3%A9tsz%C3%A1m-a-tanul%C3%B3k-teljes%C3%ADtm%C3%A9ny%C3%A9re"><i class="fa fa-check"></i><b>1.1.1</b> Hogyan hat az osztálylétszám a tanulók teljesítményére?</a></li>
+<li class="chapter" data-level="1.1.2" data-path="04-nemlinearismodellek.html"><a href="#cs%C3%B6kkenti-e-a-korrupci%C3%B3-m%C3%A9rt%C3%A9k%C3%A9t-a-n%C5%91k-r%C3%A9szv%C3%A9tele-a-politik%C3%A1ban"><i class="fa fa-check"></i><b>1.1.2</b> Csökkenti-e a korrupció mértékét a nők részvétele a politikában?</a></li>
+<li class="chapter" data-level="1.1.3" data-path="04-nemlinearismodellek.html"><a href="#csalnak-e-az-orosz-v%C3%A1laszt%C3%A1sokon"><i class="fa fa-check"></i><b>1.1.3</b> Csalnak-e az orosz választásokon?</a></li>
+<li class="chapter" data-level="1.1.4" data-path="04-nemlinearismodellek.html"><a href="#tov%C3%A1bbi-p%C3%A9ld%C3%A1k"><i class="fa fa-check"></i><b>1.1.4</b> További példák</a></li>
 </ul></li>
-<li class="chapter" data-level="1.2" data-path="út-a-többváltozós-regresszióhoz.html"><a href="út-a-többváltozós-regresszióhoz.html#a-példák-tanulságai-az-empirikus-adatok-elemzésének-legnagyobb-problémája"><i class="fa fa-check"></i><b>1.2</b> A példák tanulságai: az empirikus adatok elemzésének legnagyobb problémája</a></li>
-<li class="chapter" data-level="1.3" data-path="út-a-többváltozós-regresszióhoz.html"><a href="út-a-többváltozós-regresszióhoz.html#a-confounding-megoldásai-kísérlet-és-megfigyelés"><i class="fa fa-check"></i><b>1.3</b> A confounding megoldásai: kísérlet és megfigyelés</a></li>
-<li class="chapter" data-level="1.4" data-path="út-a-többváltozós-regresszióhoz.html"><a href="út-a-többváltozós-regresszióhoz.html#történetünk-második-szála-a-regressziós-modellek"><i class="fa fa-check"></i><b>1.4</b> Történetünk második szála: a regressziós modellek</a></li>
-<li class="chapter" data-level="1.5" data-path="út-a-többváltozós-regresszióhoz.html"><a href="út-a-többváltozós-regresszióhoz.html#regresszió-a-sokaságban"><i class="fa fa-check"></i><b>1.5</b> Regresszió a sokaságban</a></li>
-<li class="chapter" data-level="1.6" data-path="út-a-többváltozós-regresszióhoz.html"><a href="út-a-többváltozós-regresszióhoz.html#a-szálak-összeérnek"><i class="fa fa-check"></i><b>1.6</b> A szálak összeérnek</a></li>
+<li class="chapter" data-level="1.2" data-path="04-nemlinearismodellek.html"><a href="#a-p%C3%A9ld%C3%A1k-tanuls%C3%A1gai-az-empirikus-adatok-elemz%C3%A9s%C3%A9nek-legnagyobb-probl%C3%A9m%C3%A1ja"><i class="fa fa-check"></i><b>1.2</b> A példák tanulságai: az empirikus adatok elemzésének legnagyobb problémája</a></li>
+<li class="chapter" data-level="1.3" data-path="04-nemlinearismodellek.html"><a href="#a-confounding-megold%C3%A1sai-k%C3%ADs%C3%A9rlet-%C3%A9s-megfigyel%C3%A9s"><i class="fa fa-check"></i><b>1.3</b> A confounding megoldásai: kísérlet és megfigyelés</a></li>
+<li class="chapter" data-level="1.4" data-path="04-nemlinearismodellek.html"><a href="#t%C3%B6rt%C3%A9net%C3%BCnk-m%C3%A1sodik-sz%C3%A1la-a-regresszi%C3%B3s-modellek"><i class="fa fa-check"></i><b>1.4</b> Történetünk második szála: a regressziós modellek</a></li>
+<li class="chapter" data-level="1.5" data-path="04-nemlinearismodellek.html"><a href="#regresszi%C3%B3-a-sokas%C3%A1gban"><i class="fa fa-check"></i><b>1.5</b> Regresszió a sokaságban</a></li>
+<li class="chapter" data-level="1.6" data-path="04-nemlinearismodellek.html"><a href="#a-sz%C3%A1lak-%C3%B6ssze%C3%A9rnek"><i class="fa fa-check"></i><b>1.6</b> A szálak összeérnek</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="regresszió-a-mintában-következtetés.html"><a href="regresszió-a-mintában-következtetés.html"><i class="fa fa-check"></i><b>2</b> Regresszió a mintában: következtetés</a>
+<li class="chapter" data-level="2" data-path="04-nemlinearismodellek.html"><a href="#regresszi%C3%B3-a-mint%C3%A1ban-k%C3%B6vetkeztet%C3%A9s"><i class="fa fa-check"></i><b>2</b> Regresszió a mintában: következtetés</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="regresszió-a-mintában-következtetés.html"><a href="regresszió-a-mintában-következtetés.html#a-hagyományos-legkisebb-négyzetek-ols-elve"><i class="fa fa-check"></i><b>2.1</b> A hagyományos legkisebb négyzetek (OLS) elve</a></li>
-<li class="chapter" data-level="2.2" data-path="regresszió-a-mintában-következtetés.html"><a href="regresszió-a-mintában-következtetés.html#lineáris-regresszió-becslése-ols-elven"><i class="fa fa-check"></i><b>2.2</b> Lineáris regresszió becslése OLS-elven</a></li>
+<li class="chapter" data-level="2.1" data-path="04-nemlinearismodellek.html"><a href="#a-hagyom%C3%A1nyos-legkisebb-n%C3%A9gyzetek-ols-elve"><i class="fa fa-check"></i><b>2.1</b> A hagyományos legkisebb négyzetek (OLS) elve</a></li>
+<li class="chapter" data-level="2.2" data-path="04-nemlinearismodellek.html"><a href="#line%C3%A1ris-regresszi%C3%B3-becsl%C3%A9se-ols-elven"><i class="fa fa-check"></i><b>2.2</b> Lineáris regresszió becslése OLS-elven</a></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="kategoriális-magyarázó-változók.html"><a href="kategoriális-magyarázó-változók.html"><i class="fa fa-check"></i><b>3</b> Kategoriális magyarázó változók</a>
+<li class="chapter" data-level="3" data-path="04-nemlinearismodellek.html"><a href="#kategori%C3%A1lis-magyar%C3%A1z%C3%B3-v%C3%A1ltoz%C3%B3k"><i class="fa fa-check"></i><b>3</b> Kategoriális magyarázó változók</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="kategoriális-magyarázó-változók.html"><a href="kategoriális-magyarázó-változók.html#regresszió-csak-minőségi-változóval-anova"><i class="fa fa-check"></i><b>3.1</b> Regresszió csak minőségi változóval (ANOVA)</a>
+<li class="chapter" data-level="3.1" data-path="04-nemlinearismodellek.html"><a href="#regresszi%C3%B3-csak-min%C5%91s%C3%A9gi-v%C3%A1ltoz%C3%B3val-anova"><i class="fa fa-check"></i><b>3.1</b> Regresszió csak minőségi változóval (ANOVA)</a>
 <ul>
-<li class="chapter" data-level="3.1.1" data-path="kategoriális-magyarázó-változók.html"><a href="kategoriális-magyarázó-változók.html#minőségi-változók-a-regresszióban"><i class="fa fa-check"></i><b>3.1.1</b> Minőségi változók a regresszióban</a></li>
-<li class="chapter" data-level="3.1.2" data-path="kategoriális-magyarázó-változók.html"><a href="kategoriális-magyarázó-változók.html#dummy-változó-fogalma"><i class="fa fa-check"></i><b>3.1.2</b> Dummy változó fogalma</a></li>
-<li class="chapter" data-level="3.1.3" data-path="kategoriális-magyarázó-változók.html"><a href="kategoriális-magyarázó-változók.html#kódolás"><i class="fa fa-check"></i><b>3.1.3</b> Kódolás</a></li>
-<li class="chapter" data-level="3.1.4" data-path="kategoriális-magyarázó-változók.html"><a href="kategoriális-magyarázó-változók.html#referencia-kódolás"><i class="fa fa-check"></i><b>3.1.4</b> Referencia-kódolás</a></li>
-<li class="chapter" data-level="3.1.5" data-path="kategoriális-magyarázó-változók.html"><a href="kategoriális-magyarázó-változók.html#dummy-változó-csapda"><i class="fa fa-check"></i><b>3.1.5</b> Dummy változó csapda</a></li>
-<li class="chapter" data-level="3.1.6" data-path="kategoriális-magyarázó-változók.html"><a href="kategoriális-magyarázó-változók.html#triviális-kódolás-konstans-nélkül"><i class="fa fa-check"></i><b>3.1.6</b> Triviális kódolás konstans nélkül</a></li>
-<li class="chapter" data-level="3.1.7" data-path="kategoriális-magyarázó-változók.html"><a href="kategoriális-magyarázó-változók.html#referencia-kódolás-konstanssal"><i class="fa fa-check"></i><b>3.1.7</b> Referencia-kódolás konstanssal</a></li>
-<li class="chapter" data-level="3.1.8" data-path="kategoriális-magyarázó-változók.html"><a href="kategoriális-magyarázó-változók.html#együtthatók-értelmezése-referencia-kódolásnál"><i class="fa fa-check"></i><b>3.1.8</b> Együtthatók értelmezése referencia-kódolásnál</a></li>
-<li class="chapter" data-level="3.1.9" data-path="kategoriális-magyarázó-változók.html"><a href="kategoriális-magyarázó-változók.html#fontos-hipotézisvizsgálatok"><i class="fa fa-check"></i><b>3.1.9</b> Fontos hipotézisvizsgálatok</a></li>
-<li class="chapter" data-level="3.1.10" data-path="kategoriális-magyarázó-változók.html"><a href="kategoriális-magyarázó-változók.html#egynél-több-kategoriális-magyarázó-változó"><i class="fa fa-check"></i><b>3.1.10</b> Egynél több kategoriális magyarázó változó</a></li>
+<li class="chapter" data-level="3.1.1" data-path="04-nemlinearismodellek.html"><a href="#min%C5%91s%C3%A9gi-v%C3%A1ltoz%C3%B3k-a-regresszi%C3%B3ban"><i class="fa fa-check"></i><b>3.1.1</b> Minőségi változók a regresszióban</a></li>
+<li class="chapter" data-level="3.1.2" data-path="04-nemlinearismodellek.html"><a href="#dummy-v%C3%A1ltoz%C3%B3-fogalma"><i class="fa fa-check"></i><b>3.1.2</b> Dummy változó fogalma</a></li>
+<li class="chapter" data-level="3.1.3" data-path="04-nemlinearismodellek.html"><a href="#k%C3%B3dol%C3%A1s"><i class="fa fa-check"></i><b>3.1.3</b> Kódolás</a></li>
+<li class="chapter" data-level="3.1.4" data-path="04-nemlinearismodellek.html"><a href="#referencia-k%C3%B3dol%C3%A1s"><i class="fa fa-check"></i><b>3.1.4</b> Referencia-kódolás</a></li>
+<li class="chapter" data-level="3.1.5" data-path="04-nemlinearismodellek.html"><a href="#dummy-v%C3%A1ltoz%C3%B3-csapda"><i class="fa fa-check"></i><b>3.1.5</b> Dummy változó csapda</a></li>
+<li class="chapter" data-level="3.1.6" data-path="04-nemlinearismodellek.html"><a href="#trivi%C3%A1lis-k%C3%B3dol%C3%A1s-konstans-n%C3%A9lk%C3%BCl"><i class="fa fa-check"></i><b>3.1.6</b> Triviális kódolás konstans nélkül</a></li>
+<li class="chapter" data-level="3.1.7" data-path="04-nemlinearismodellek.html"><a href="#referencia-k%C3%B3dol%C3%A1s-konstanssal"><i class="fa fa-check"></i><b>3.1.7</b> Referencia-kódolás konstanssal</a></li>
+<li class="chapter" data-level="3.1.8" data-path="04-nemlinearismodellek.html"><a href="#egy%C3%BCtthat%C3%B3k-%C3%A9rtelmez%C3%A9se-referencia-k%C3%B3dol%C3%A1sn%C3%A1l"><i class="fa fa-check"></i><b>3.1.8</b> Együtthatók értelmezése referencia-kódolásnál</a></li>
+<li class="chapter" data-level="3.1.9" data-path="04-nemlinearismodellek.html"><a href="#fontos-hipot%C3%A9zisvizsg%C3%A1latok"><i class="fa fa-check"></i><b>3.1.9</b> Fontos hipotézisvizsgálatok</a></li>
+<li class="chapter" data-level="3.1.10" data-path="04-nemlinearismodellek.html"><a href="#egyn%C3%A9l-t%C3%B6bb-kategori%C3%A1lis-magyar%C3%A1z%C3%B3-v%C3%A1ltoz%C3%B3"><i class="fa fa-check"></i><b>3.1.10</b> Egynél több kategoriális magyarázó változó</a></li>
 </ul></li>
-<li class="chapter" data-level="3.2" data-path="kategoriális-magyarázó-változók.html"><a href="kategoriális-magyarázó-változók.html#regresszió-minőségi-és-mennyiségi-magyarázó-változóval-ancova"><i class="fa fa-check"></i><b>3.2</b> Regresszió minőségi és mennyiségi magyarázó változóval (ANCOVA)</a>
+<li class="chapter" data-level="3.2" data-path="04-nemlinearismodellek.html"><a href="#regresszi%C3%B3-min%C5%91s%C3%A9gi-%C3%A9s-mennyis%C3%A9gi-magyar%C3%A1z%C3%B3-v%C3%A1ltoz%C3%B3val-ancova"><i class="fa fa-check"></i><b>3.2</b> Regresszió minőségi és mennyiségi magyarázó változóval (ANCOVA)</a>
 <ul>
-<li class="chapter" data-level="3.2.1" data-path="kategoriális-magyarázó-változók.html"><a href="kategoriális-magyarázó-változók.html#dummyzás-folytonos-magyarázó-változó-jelenléte-mellett"><i class="fa fa-check"></i><b>3.2.1</b> Dummyzás folytonos magyarázó változó jelenléte mellett}</a></li>
-<li class="chapter" data-level="3.2.2" data-path="kategoriális-magyarázó-változók.html"><a href="kategoriális-magyarázó-változók.html#eltérő-tengelymetszet"><i class="fa fa-check"></i><b>3.2.2</b> Eltérő tengelymetszet</a></li>
-<li class="chapter" data-level="3.2.3" data-path="kategoriális-magyarázó-változók.html"><a href="kategoriális-magyarázó-változók.html#eltérő-meredekség"><i class="fa fa-check"></i><b>3.2.3</b> Eltérő meredekség</a></li>
-<li class="chapter" data-level="3.2.4" data-path="kategoriális-magyarázó-változók.html"><a href="kategoriális-magyarázó-változók.html#eltérő-tengelymetszet-és-meredekség"><i class="fa fa-check"></i><b>3.2.4</b> Eltérő tengelymetszet és meredekség</a></li>
-<li class="chapter" data-level="3.2.5" data-path="kategoriális-magyarázó-változók.html"><a href="kategoriális-magyarázó-változók.html#eltérő-tengelymetszet-és-meredekség-1"><i class="fa fa-check"></i><b>3.2.5</b> Eltérő tengelymetszet és meredekség</a></li>
-<li class="chapter" data-level="3.2.6" data-path="kategoriális-magyarázó-változók.html"><a href="kategoriális-magyarázó-változók.html#hipotézisvizsgálat-a-dummyzott-modellben"><i class="fa fa-check"></i><b>3.2.6</b> Hipotézisvizsgálat a dummyzott modellben</a></li>
-<li class="chapter" data-level="3.2.7" data-path="kategoriális-magyarázó-változók.html"><a href="kategoriális-magyarázó-változók.html#kontraszt-kódolás"><i class="fa fa-check"></i><b>3.2.7</b> Kontraszt-kódolás</a></li>
-<li class="chapter" data-level="3.2.8" data-path="kategoriális-magyarázó-változók.html"><a href="kategoriális-magyarázó-változók.html#egy-terminológiai-megjegyzés"><i class="fa fa-check"></i><b>3.2.8</b> Egy terminológiai megjegyzés</a></li>
+<li class="chapter" data-level="3.2.1" data-path="04-nemlinearismodellek.html"><a href="#dummyz%C3%A1s-folytonos-magyar%C3%A1z%C3%B3-v%C3%A1ltoz%C3%B3-jelenl%C3%A9te-mellett"><i class="fa fa-check"></i><b>3.2.1</b> Dummyzás folytonos magyarázó változó jelenléte mellett</a></li>
+<li class="chapter" data-level="3.2.2" data-path="04-nemlinearismodellek.html"><a href="#elt%C3%A9r%C5%91-tengelymetszet"><i class="fa fa-check"></i><b>3.2.2</b> Eltérő tengelymetszet</a></li>
+<li class="chapter" data-level="3.2.3" data-path="04-nemlinearismodellek.html"><a href="#elt%C3%A9r%C5%91-meredeks%C3%A9g"><i class="fa fa-check"></i><b>3.2.3</b> Eltérő meredekség</a></li>
+<li class="chapter" data-level="3.2.4" data-path="04-nemlinearismodellek.html"><a href="#elt%C3%A9r%C5%91-tengelymetszet-%C3%A9s-meredeks%C3%A9g"><i class="fa fa-check"></i><b>3.2.4</b> Eltérő tengelymetszet és meredekség</a></li>
+<li class="chapter" data-level="3.2.5" data-path="04-nemlinearismodellek.html"><a href="#elt%C3%A9r%C5%91-tengelymetszet-%C3%A9s-meredeks%C3%A9g-1"><i class="fa fa-check"></i><b>3.2.5</b> Eltérő tengelymetszet és meredekség</a></li>
+<li class="chapter" data-level="3.2.6" data-path="04-nemlinearismodellek.html"><a href="#hipot%C3%A9zisvizsg%C3%A1lat-a-dummyzott-modellben"><i class="fa fa-check"></i><b>3.2.6</b> Hipotézisvizsgálat a dummyzott modellben</a></li>
+<li class="chapter" data-level="3.2.7" data-path="04-nemlinearismodellek.html"><a href="#kontraszt-k%C3%B3dol%C3%A1s"><i class="fa fa-check"></i><b>3.2.7</b> Kontraszt-kódolás</a></li>
+<li class="chapter" data-level="3.2.8" data-path="04-nemlinearismodellek.html"><a href="#egy-terminol%C3%B3giai-megjegyz%C3%A9s"><i class="fa fa-check"></i><b>3.2.8</b> Egy terminológiai megjegyzés</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html"><i class="fa fa-check"></i><b>4</b> Nemlineáris modellek</a>
+<li class="chapter" data-level="4" data-path="04-nemlinearismodellek.html"><a href="#nemline%C3%A1ris-modellek"><i class="fa fa-check"></i><b>4</b> Nemlineáris modellek</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#elöljáróban-a-marginális-hatás-általánosabb-értelmezése"><i class="fa fa-check"></i><b>4.1</b> Elöljáróban: a marginális hatás általánosabb értelmezése</a>
+<li class="chapter" data-level="4.1" data-path="04-nemlinearismodellek.html"><a href="#el%C3%B6lj%C3%A1r%C3%B3ban-a-margin%C3%A1lis-hat%C3%A1s-%C3%A1ltal%C3%A1nosabb-%C3%A9rtelmez%C3%A9se"><i class="fa fa-check"></i><b>4.1</b> Elöljáróban: a marginális hatás általánosabb értelmezése</a>
 <ul>
-<li class="chapter" data-level="4.1.1" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#a-marginális-hatás-fogalma"><i class="fa fa-check"></i><b>4.1.1</b> A marginális hatás fogalma</a></li>
-<li class="chapter" data-level="4.1.2" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#a-marginális-hatás-precízebben"><i class="fa fa-check"></i><b>4.1.2</b> A marginális hatás precízebben</a></li>
+<li class="chapter" data-level="4.1.1" data-path="04-nemlinearismodellek.html"><a href="#a-margin%C3%A1lis-hat%C3%A1s-fogalma"><i class="fa fa-check"></i><b>4.1.1</b> A marginális hatás fogalma</a></li>
+<li class="chapter" data-level="4.1.2" data-path="04-nemlinearismodellek.html"><a href="#a-margin%C3%A1lis-hat%C3%A1s-prec%C3%ADzebben"><i class="fa fa-check"></i><b>4.1.2</b> A marginális hatás precízebben</a></li>
 </ul></li>
-<li class="chapter" data-level="4.2" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#a-linearitás-feloldása"><i class="fa fa-check"></i><b>4.2</b> A linearitás feloldása</a>
+<li class="chapter" data-level="4.2" data-path="04-nemlinearismodellek.html"><a href="#a-linearit%C3%A1s-felold%C3%A1sa"><i class="fa fa-check"></i><b>4.2</b> A linearitás feloldása</a>
 <ul>
-<li class="chapter" data-level="4.2.1" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#emlékeztetőül-a-linearitás-következményei"><i class="fa fa-check"></i><b>4.2.1</b> Emlékeztetőül: a linearitás következményei</a></li>
-<li class="chapter" data-level="4.2.2" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#az-additivitás-feloldása-az-interakció"><i class="fa fa-check"></i><b>4.2.2</b> Az additivitás feloldása: az interakció</a></li>
-<li class="chapter" data-level="4.2.3" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#a-marginális-hatás-interakciók-esetén"><i class="fa fa-check"></i><b>4.2.3</b> A marginális hatás interakciók esetén</a></li>
-<li class="chapter" data-level="4.2.4" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#a-változónkénti-linearitás-feloldása-egy-motiváló-példa"><i class="fa fa-check"></i><b>4.2.4</b> A változónkénti linearitás feloldása: egy motiváló példa</a></li>
-<li class="chapter" data-level="4.2.5" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#a-változónkénti-linearitás-feloldása-egy-motiváló-példa-1"><i class="fa fa-check"></i><b>4.2.5</b> A változónkénti linearitás feloldása: egy motiváló példa</a></li>
-<li class="chapter" data-level="4.2.6" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#linearitás-mint-közelítés"><i class="fa fa-check"></i><b>4.2.6</b> Linearitás, mint közelítés</a></li>
-<li class="chapter" data-level="4.2.7" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#érvényességi-határok"><i class="fa fa-check"></i><b>4.2.7</b> Érvényességi határok</a></li>
-<li class="chapter" data-level="4.2.8" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#nemlinearitás-fajtái"><i class="fa fa-check"></i><b>4.2.8</b> Nemlinearitás fajtái</a></li>
-<li class="chapter" data-level="4.2.9" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#változójában-nemlineáris-modell"><i class="fa fa-check"></i><b>4.2.9</b> Változójában nemlineáris modell</a></li>
-<li class="chapter" data-level="4.2.10" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#paramétereiben-nemlineáris-modell"><i class="fa fa-check"></i><b>4.2.10</b> Paramétereiben nemlineáris modell</a></li>
-<li class="chapter" data-level="4.2.11" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#interakció-és-kvadratikus-hatás-revisited"><i class="fa fa-check"></i><b>4.2.11</b> Interakció és kvadratikus hatás revisited</a></li>
-<li class="chapter" data-level="4.2.12" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#nemlinearitás-kezelése-nls"><i class="fa fa-check"></i><b>4.2.12</b> Nemlinearitás kezelése: NLS</a></li>
-<li class="chapter" data-level="4.2.13" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#nemlinearitás-kezelése-algebrai-linearizáció"><i class="fa fa-check"></i><b>4.2.13</b> Nemlinearitás kezelése: algebrai linearizáció</a></li>
+<li class="chapter" data-level="4.2.1" data-path="04-nemlinearismodellek.html"><a href="#eml%C3%A9keztet%C5%91%C3%BCl-a-linearit%C3%A1s-k%C3%B6vetkezm%C3%A9nyei"><i class="fa fa-check"></i><b>4.2.1</b> Emlékeztetőül: a linearitás következményei</a></li>
+<li class="chapter" data-level="4.2.2" data-path="04-nemlinearismodellek.html"><a href="#az-additivit%C3%A1s-felold%C3%A1sa-az-interakci%C3%B3"><i class="fa fa-check"></i><b>4.2.2</b> Az additivitás feloldása: az interakció</a></li>
+<li class="chapter" data-level="4.2.3" data-path="04-nemlinearismodellek.html"><a href="#a-margin%C3%A1lis-hat%C3%A1s-interakci%C3%B3k-eset%C3%A9n"><i class="fa fa-check"></i><b>4.2.3</b> A marginális hatás interakciók esetén</a></li>
+<li class="chapter" data-level="4.2.4" data-path="04-nemlinearismodellek.html"><a href="#a-v%C3%A1ltoz%C3%B3nk%C3%A9nti-linearit%C3%A1s-felold%C3%A1sa-egy-motiv%C3%A1l%C3%B3-p%C3%A9lda"><i class="fa fa-check"></i><b>4.2.4</b> A változónkénti linearitás feloldása: egy motiváló példa</a></li>
+<li class="chapter" data-level="4.2.5" data-path="04-nemlinearismodellek.html"><a href="#a-v%C3%A1ltoz%C3%B3nk%C3%A9nti-linearit%C3%A1s-felold%C3%A1sa-egy-motiv%C3%A1l%C3%B3-p%C3%A9lda-1"><i class="fa fa-check"></i><b>4.2.5</b> A változónkénti linearitás feloldása: egy motiváló példa</a></li>
+<li class="chapter" data-level="4.2.6" data-path="04-nemlinearismodellek.html"><a href="#linearit%C3%A1s-mint-k%C3%B6zel%C3%ADt%C3%A9s"><i class="fa fa-check"></i><b>4.2.6</b> Linearitás, mint közelítés</a></li>
+<li class="chapter" data-level="4.2.7" data-path="04-nemlinearismodellek.html"><a href="#%C3%A9rv%C3%A9nyess%C3%A9gi-hat%C3%A1rok"><i class="fa fa-check"></i><b>4.2.7</b> Érvényességi határok</a></li>
+<li class="chapter" data-level="4.2.8" data-path="04-nemlinearismodellek.html"><a href="#nemlinearit%C3%A1s-fajt%C3%A1i"><i class="fa fa-check"></i><b>4.2.8</b> Nemlinearitás fajtái</a></li>
+<li class="chapter" data-level="4.2.9" data-path="04-nemlinearismodellek.html"><a href="#v%C3%A1ltoz%C3%B3j%C3%A1ban-nemline%C3%A1ris-modell"><i class="fa fa-check"></i><b>4.2.9</b> Változójában nemlineáris modell</a></li>
+<li class="chapter" data-level="4.2.10" data-path="04-nemlinearismodellek.html"><a href="#param%C3%A9tereiben-nemline%C3%A1ris-modell"><i class="fa fa-check"></i><b>4.2.10</b> Paramétereiben nemlineáris modell</a></li>
+<li class="chapter" data-level="4.2.11" data-path="04-nemlinearismodellek.html"><a href="#interakci%C3%B3-%C3%A9s-kvadratikus-hat%C3%A1s-revisited"><i class="fa fa-check"></i><b>4.2.11</b> Interakció és kvadratikus hatás revisited</a></li>
+<li class="chapter" data-level="4.2.12" data-path="04-nemlinearismodellek.html"><a href="#nemlinearit%C3%A1s-kezel%C3%A9se-nls"><i class="fa fa-check"></i><b>4.2.12</b> Nemlinearitás kezelése: NLS</a></li>
+<li class="chapter" data-level="4.2.13" data-path="04-nemlinearismodellek.html"><a href="#nemlinearit%C3%A1s-kezel%C3%A9se-algebrai-lineariz%C3%A1ci%C3%B3"><i class="fa fa-check"></i><b>4.2.13</b> Nemlinearitás kezelése: algebrai linearizáció</a></li>
 </ul></li>
-<li class="chapter" data-level="4.3" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#néhány-nevezetes-paraméterében-nemlineáris-modell"><i class="fa fa-check"></i><b>4.3</b> Néhány nevezetes, paraméterében nemlineáris modell</a>
+<li class="chapter" data-level="4.3" data-path="04-nemlinearismodellek.html"><a href="#n%C3%A9h%C3%A1ny-nevezetes-param%C3%A9ter%C3%A9ben-nemline%C3%A1ris-modell"><i class="fa fa-check"></i><b>4.3</b> Néhány nevezetes, paraméterében nemlineáris modell</a>
 <ul>
-<li class="chapter" data-level="4.3.1" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#log-log-modell"><i class="fa fa-check"></i><b>4.3.1</b> Log-log modell</a></li>
+<li class="chapter" data-level="4.3.1" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html"><i class="fa fa-check"></i><b>4.3.1</b> Log-log modell</a></li>
 <li class="chapter" data-level="4.3.2" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#log-lin-modell"><i class="fa fa-check"></i><b>4.3.2</b> Log-lin modell</a></li>
-<li class="chapter" data-level="4.3.3" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#lin-log-modell-kakukktojás"><i class="fa fa-check"></i><b>4.3.3</b> Lin-log modell – kakukktojás!</a></li>
-<li class="chapter" data-level="4.3.4" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#reciprok-modell-kakukktojás"><i class="fa fa-check"></i><b>4.3.4</b> Reciprok modell – kakukktojás</a></li>
-<li class="chapter" data-level="4.3.5" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#egy-komplex-példa-vegyes-modellre"><i class="fa fa-check"></i><b>4.3.5</b> Egy komplex példa vegyes modellre</a></li>
+<li class="chapter" data-level="4.3.3" data-path="04-nemlinearismodellek.html"><a href="#lin-log-modell-kakukktoj%C3%A1s"><i class="fa fa-check"></i><b>4.3.3</b> Lin-log modell – kakukktojás!</a></li>
+<li class="chapter" data-level="4.3.4" data-path="04-nemlinearismodellek.html"><a href="#reciprok-modell-kakukktoj%C3%A1s"><i class="fa fa-check"></i><b>4.3.4</b> Reciprok modell – kakukktojás</a></li>
+<li class="chapter" data-level="4.3.5" data-path="04-nemlinearismodellek.html"><a href="#egy-komplex-p%C3%A9lda-vegyes-modellre"><i class="fa fa-check"></i><b>4.3.5</b> Egy komplex példa vegyes modellre</a></li>
 </ul></li>
-<li class="chapter" data-level="4.4" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#specifikációs-tesztek"><i class="fa fa-check"></i><b>4.4</b> Specifikációs tesztek</a>
+<li class="chapter" data-level="4.4" data-path="04-nemlinearismodellek.html"><a href="#specifik%C3%A1ci%C3%B3s-tesztek"><i class="fa fa-check"></i><b>4.4</b> Specifikációs tesztek</a>
 <ul>
-<li class="chapter" data-level="4.4.1" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#a-specifikációs-tesztek"><i class="fa fa-check"></i><b>4.4.1</b> A specifikációs tesztek</a></li>
-<li class="chapter" data-level="4.4.2" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#egy-egyszerű-specifikációs-teszt"><i class="fa fa-check"></i><b>4.4.2</b> Egy egyszerű specifikációs teszt</a></li>
+<li class="chapter" data-level="4.4.1" data-path="04-nemlinearismodellek.html"><a href="#a-specifik%C3%A1ci%C3%B3s-tesztek"><i class="fa fa-check"></i><b>4.4.1</b> A specifikációs tesztek</a></li>
+<li class="chapter" data-level="4.4.2" data-path="04-nemlinearismodellek.html"><a href="#egy-egyszer%C5%B1-specifik%C3%A1ci%C3%B3s-teszt"><i class="fa fa-check"></i><b>4.4.2</b> Egy egyszerű specifikációs teszt</a></li>
 <li class="chapter" data-level="4.4.3" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#ramsey-reset-je"><i class="fa fa-check"></i><b>4.4.3</b> Ramsey RESET-je</a></li>
 </ul></li>
 </ul></li>
@@ -247,12 +244,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="nemlineáris-modellek" class="section level1" number="4">
-<h1><span class="header-section-number">4 . fejezet</span> Nemlineáris modellek</h1>
-<div id="elöljáróban-a-marginális-hatás-általánosabb-értelmezése" class="section level2" number="4.1">
-<h2><span class="header-section-number">4.1</span> Elöljáróban: a marginális hatás általánosabb értelmezése</h2>
-<div id="a-marginális-hatás-fogalma" class="section level3" number="4.1.1">
-<h3><span class="header-section-number">4.1.1</span> A marginális hatás fogalma</h3>
+<div id="nemlineáris-modellek" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">4 . fejezet</span> Nemlineáris modellek<a href="#nemline%C3%A1ris-modellek" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="elöljáróban-a-marginális-hatás-általánosabb-értelmezése" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Elöljáróban: a marginális hatás általánosabb értelmezése<a href="#el%C3%B6lj%C3%A1r%C3%B3ban-a-margin%C3%A1lis-hat%C3%A1s-%C3%A1ltal%C3%A1nosabb-%C3%A9rtelmez%C3%A9se" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="a-marginális-hatás-fogalma" class="section level3 hasAnchor" number="4.1.1">
+<h3><span class="header-section-number">4.1.1</span> A marginális hatás fogalma<a href="#a-margin%C3%A1lis-hat%C3%A1s-fogalma" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Marginális hatás: a magyarázó változó kis növelésének hatására mekkora az eredményváltozó <em>egységnyi magyarázóváltozó-növelésre jutó</em> változása</li>
 <li>Tipikus egyszerűsítés: a magyarázó változó egységnyi növelésének hatására mennyit változik az eredményváltozó</li>
@@ -260,106 +257,108 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>Idáig az <span class="math inline">\(i\)</span>-edik magyarázó változó ilyen módon értelmezett marginális hatása és a <span class="math inline">\(\beta_i\)</span> számértéke gyakorlatilag szinonima volt</li>
 </ul>
 </div>
-<div id="a-marginális-hatás-precízebben" class="section level3" number="4.1.2">
-<h3><span class="header-section-number">4.1.2</span> A marginális hatás precízebben</h3>
+<div id="a-marginális-hatás-precízebben" class="section level3 hasAnchor" number="4.1.2">
+<h3><span class="header-section-number">4.1.2</span> A marginális hatás precízebben<a href="#a-margin%C3%A1lis-hat%C3%A1s-prec%C3%ADzebben" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Definíció alapján a marginális hatás: <span class="math inline">\(\frac{\Delta Y}{\Delta X_j}\)</span>, ha <span class="math inline">\(\Delta X_j\)</span> kicsiny</li>
 <li>Ugye egyetemen vagyunk <span class="math inline">\(\rightarrow\)</span> a marginális hatás <span class="math inline">\(\frac{\partial Y}{\partial X_j}\)</span></li>
-<li>A többváltozós lineáris regresszió eddigi (sokasági) modelljében <span class="math inline">\(Y=\beta_0+\beta_1 X_1+\ldots+\beta_k X_k+\varepsilon\)</span>, ezért
-<span class="math display">\[\begin{align*}
-      \frac{\partial Y}{\partial X_j}&amp;=\frac{\partial}{\partial X_j}\left[\beta_0+\beta_1 X_1+\ldots+\right.\\
-      &amp;\left.+\ldots+\beta_{j-1} X_{j-1}+\beta_j X_j+\beta_{j+1} X_{j+1}+\ldots +\beta_k X_k+\varepsilon\right]=\\
-      &amp;=\beta_j
-  \end{align*}\]</span></li>
-<li>hát ezért tekinthettük eddig a marginális hatást és a becsült regressziós koefficienst szinonimának!</li>
+<li>A többváltozós lineáris regresszió eddigi (sokasági) modelljében <span class="math inline">\(Y=\beta_0+\beta_1 X_1+\ldots+\beta_k X_k+\varepsilon\)</span>, ezért</li>
 </ul>
-</div>
-</div>
-<div id="a-linearitás-feloldása" class="section level2" number="4.2">
-<h2><span class="header-section-number">4.2</span> A linearitás feloldása</h2>
-<div id="emlékeztetőül-a-linearitás-következményei" class="section level3" number="4.2.1">
-<h3><span class="header-section-number">4.2.1</span> Emlékeztetőül: a linearitás következményei</h3>
+<p><span class="math display">\[\begin{align*}
+    \frac{\partial Y}{\partial X_j}&amp;=\frac{\partial}{\partial X_j}\left[\beta_0+\beta_1 X_1+\ldots+\right.\\
+    &amp;\left.+\ldots+\beta_{j-1} X_{j-1}+\beta_j X_j+\beta_{j+1} X_{j+1}+\ldots +\beta_k X_k+\varepsilon\right]=\\
+    &amp;=\beta_j
+\end{align*}\]</span></p>
 <ul>
-<li>A linearitás két dolgot vont maga után:</li>
-<li>E kettőt fogjuk most feloldani</li>
+<li>…hát ezért tekinthettük eddig a marginális hatást és a becsült regressziós koefficienst szinonimának!</li>
 </ul>
 </div>
-<div id="az-additivitás-feloldása-az-interakció" class="section level3" number="4.2.2">
-<h3><span class="header-section-number">4.2.2</span> Az additivitás feloldása: az interakció</h3>
+</div>
+<div id="a-linearitás-feloldása" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> A linearitás feloldása<a href="#a-linearit%C3%A1s-felold%C3%A1sa" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="emlékeztetőül-a-linearitás-következményei" class="section level3 hasAnchor" number="4.2.1">
+<h3><span class="header-section-number">4.2.1</span> Emlékeztetőül: a linearitás következményei<a href="#eml%C3%A9keztet%C5%91%C3%BCl-a-linearit%C3%A1s-k%C3%B6vetkezm%C3%A9nyei" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li><p>A linearitás két dolgot vont maga után:</p>
+<ul>
+<li>Mindegy, hogy honnan indulva növelem a változót egy egységgel (a változó hatása lineáris)</li>
+<li>Mindegy, hogy a többi változó milyen szinten van rögzítve (additivitás)</li>
+</ul></li>
+<li><p>E kettőt fogjuk most feloldani</p></li>
+</ul>
+</div>
+<div id="az-additivitás-feloldása-az-interakció" class="section level3 hasAnchor" number="4.2.2">
+<h3><span class="header-section-number">4.2.2</span> Az additivitás feloldása: az interakció<a href="#az-additivit%C3%A1s-felold%C3%A1sa-az-interakci%C3%B3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Eddigi modellünkben a marginális hatások a többi változó szintjétől függetlenül állandóak voltak</li>
-<li>Például: 1 Ft pluszjövedelem taglétszámtól függetlenül azonos többletkiadást jelent?</li>
-<li>Ha nem, akkor azt mondjuk, hogy a két változó között  van: az egyik marginális hatásának  befolyásolja a másik </li>
+<li>Például: 1 Ft pluszjövedelem taglétszámtól függetlenül azonos többletkiadást jelent…?</li>
+<li>Ha nem, akkor azt mondjuk, hogy a két változó között <em>interakció</em> van: az egyik marginális hatásának <em>nagyságát</em> befolyásolja a másik <em>szintje</em></li>
 <li>A kapcsolat tehát marginális hatás és szint között van (nem marginális hatás és marginális hatás vagy szint és szint között!)</li>
-<li>Kézenfekvő indulás: az egyik változó szintje  hasson a másik marginális hatására; sokaságban felírva:
-<span class="math display">\[
-  \left(\beta_J+\beta_{JT} \mathrm{Tag}\right) \mathrm{Jov},
-\]</span>
-ahol <span class="math inline">\(\beta_{JT}\)</span> az interakció hatását kifejező (lineáris) együttható</li>
-<li>Helyezzük ezt be a (sokasági) regresszióba:
-<span class="math display">\[
-  Y=\beta_0+\left(\beta_J+\beta_{JT} \mathrm{Tag}\right) \mathrm{Jov} + \beta_T \mathrm{Tag}+\varepsilon,
-\]</span>
-azonban felbontva a zárójelet:
-<span class="math display">\[\begin{align*}
-  Y&amp;=\beta_0+\beta_J \mathrm{Jov}+\beta_{JT} \mathrm{Tag} \cdot \mathrm{Jov} + \beta_T \mathrm{Tag}+\varepsilon =\\
-  &amp;=\beta_0 + \beta_J \mathrm{Jov}+ \left(\beta_T + \beta_{JT} \mathrm{Jov}\right) \mathrm{Tag}+\varepsilon
-\end{align*}\]</span></li>
-<li>Tehát az interakció , automatikusan ,,szimmetrikus’’: ha az egyik változó szintje hat a másik marginális hatására akkor szükségképp fordítva is: a másik szintje is hatni fog az előbbi marginális hatására</li>
-<li>Azaz ,,egyszerre’’ lesz igaz, hogy <span class="math inline">\(\left(\beta_J+\beta_{JT} \mathrm{Tag}\right) \mathrm{Jov}\)</span> és <span class="math inline">\(\left(\beta_T+\beta_{JT} \mathrm{Jov}\right) \mathrm{Tag}\)</span>: attól függően, hogy milyen szempontból nézzük (melyik marginális hatását vizsgáljuk, ezt még ld. később is)</li>
-<li>A regresszióban így elég egyszerűen ennyit írni:
-<span class="math display">\[
-  \beta_T \mathrm{Tag} + \beta_J \mathrm{Jov} + \beta_{JT} \left(\mathrm{Jov} \cdot \mathrm{Tag}\right).
-\]</span></li>
-<li>mindkét – másik szintjétől függő – marginális hatás ebből kiadódik, függően attól, hogy hogyan bontjuk fel a zárójelet (melyik változót vizsgáljuk)</li>
-<li>Ez a marginális hatás pontosabb értelmezése mellett még szebben látható</li>
+<li>Kézenfekvő indulás: az egyik változó szintje <em>lineárisan</em> hasson a másik marginális hatására; sokaságban felírva:</li>
+</ul>
+<p><span class="math display">\[\left(\beta_J+\beta_{JT} \mathrm{Tag}\right) \mathrm{Jov},\]</span></p>
+<p>ahol <span class="math inline">\(\beta_{JT}\)</span> az interakció hatását kifejező (lineáris) együttható
+- Helyezzük ezt be a (sokasági) regresszióba:</p>
+<p><span class="math display">\[Y=\beta_0+\left(\beta_J+\beta_{JT} \mathrm{Tag}\right) \mathrm{Jov} + \beta_T \mathrm{Tag}+\varepsilon,\]</span></p>
+<p>azonban felbontva a zárójelet:</p>
+<p><span class="math display">\[\begin{align*}
+    Y&amp;=\beta_0+\beta_J \mathrm{Jov}+\beta_{JT} \mathrm{Tag} \cdot \mathrm{Jov} + \beta_T \mathrm{Tag}+\varepsilon =\\
+    &amp;=\beta_0 + \beta_J \mathrm{Jov}+ \left(\beta_T + \beta_{JT} \mathrm{Jov}\right) \mathrm{Tag}+\varepsilon
+\end{align*}\]</span></p>
+<ul>
+<li><p>Tehát az interakció <em>szükségképp</em>, automatikusan <q>szimmetrikus</q>: ha az egyik változó szintje hat a másik marginális hatására akkor szükségképp fordítva is: a másik szintje is hatni fog az előbbi marginális hatására</p></li>
+<li><p>Azaz <q>egyszerre</q> lesz igaz, hogy <span class="math inline">\(\left(\beta_J+\beta_{JT} \mathrm{Tag}\right) \mathrm{Jov}\)</span> és <span class="math inline">\(\left(\beta_T+\beta_{JT} \mathrm{Jov}\right) \mathrm{Tag}\)</span>: attól függően, hogy milyen szempontból nézzük (melyik marginális hatását vizsgáljuk, ezt még ld. később is)</p></li>
+<li><p>A regresszióban így elég egyszerűen ennyit írni:</p>
+<p><span class="math display">\[\beta_T \mathrm{Tag} + \beta_J \mathrm{Jov} + \beta_{JT} \left(\mathrm{Jov} \cdot \mathrm{Tag}\right).\]</span></p></li>
+<li><p>…mindkét – másik szintjétől függő – marginális hatás ebből kiadódik, függően attól, hogy hogyan bontjuk fel a zárójelet (melyik változót vizsgáljuk)</p></li>
+<li><p>Ez a marginális hatás pontosabb értelmezése mellett még szebben látható</p></li>
 </ul>
 </div>
-<div id="a-marginális-hatás-interakciók-esetén" class="section level3" number="4.2.3">
-<h3><span class="header-section-number">4.2.3</span> A marginális hatás interakciók esetén</h3>
+<div id="a-marginális-hatás-interakciók-esetén" class="section level3 hasAnchor" number="4.2.3">
+<h3><span class="header-section-number">4.2.3</span> A marginális hatás interakciók esetén<a href="#a-margin%C3%A1lis-hat%C3%A1s-interakci%C3%B3k-eset%C3%A9n" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li>Ha interakció van, például a <span class="math inline">\(l\)</span>-edik és az <span class="math inline">\(m\)</span>-edik tag között, akkor az <span class="math inline">\(l\)</span>-edik marginális hatása:
-<span class="math display">\[\begin{align*}
+<li>Ha interakció van, például a <span class="math inline">\(l\)</span>-edik és az <span class="math inline">\(m\)</span>-edik tag között, akkor az <span class="math inline">\(l\)</span>-edik marginális hatása:</li>
+</ul>
+<p><span class="math display">\[\begin{align*}
 \frac{\partial Y}{\partial X_l}&amp;=\frac{\partial}{\partial X_l}\left[\beta_0+\beta_1 X_1+\ldots+\right.\\
 &amp;\left.+\ldots+\beta_l X_l+\ldots+\beta_{m} X_m+\ldots+\beta_k X_k+\beta_{lm} X_l X_m+\varepsilon\right]=\\
 &amp;=\beta_l+\beta_{lm} X_m
-\end{align*}\]</span></li>
+\end{align*}\]</span></p>
+<ul>
 <li>Így precíz az előbbi állításunk arról, hogy ha az egyik szerint vizsgáljuk a marginális hatást, akkor az a másik szintjétől fog függeni (gondoljuk hozzá a másik szerinti deriválást is!)</li>
 </ul>
 </div>
-<div id="a-változónkénti-linearitás-feloldása-egy-motiváló-példa" class="section level3" number="4.2.4">
-<h3><span class="header-section-number">4.2.4</span> A változónkénti linearitás feloldása: egy motiváló példa</h3>
+<div id="a-változónkénti-linearitás-feloldása-egy-motiváló-példa" class="section level3 hasAnchor" number="4.2.4">
+<h3><span class="header-section-number">4.2.4</span> A változónkénti linearitás feloldása: egy motiváló példa<a href="#a-v%C3%A1ltoz%C3%B3nk%C3%A9nti-linearit%C3%A1s-felold%C3%A1sa-egy-motiv%C3%A1l%C3%B3-p%C3%A9lda" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li>Már volt: mit jelent az, ha megsértjük a ,,marginális hatás nem függ attól, hogy a többi magyarázó változót milyen szinten rögzítjük’’ következményét a linearitásnak</li>
-<li>És ha a ,,marginális hatás nem függ attól, hogy milyen szintről indulva növeljük a változót’’ következményt szeretnénk feloldani?</li>
-<li>Például: 1 évvel idősebb életkor kiinduló életkortól függetlenül azonos kiadásváltozást jelent?</li>
-<li>Használjunk a lineáris függvényforma helyett mást, például négyzeteset (parabolát):
-<span class="math display">\[
-  \frac{\partial}{\partial X_j}\left[\ldots+\beta_j X_j + \beta_{jj} X_j^2+\ldots\right]=\beta_j+2\beta_{jj} X_j
-\]</span></li>
+<li><p>Már volt: mit jelent az, ha megsértjük a <q>marginális hatás nem függ attól, hogy a többi magyarázó változót milyen szinten rögzítjük</q> következményét a linearitásnak</p></li>
+<li><p>És ha a <q>marginális hatás nem függ attól, hogy milyen szintről indulva növeljük a változót</q> következményt szeretnénk feloldani?</p></li>
+<li><p>Például: 1 évvel idősebb életkor kiinduló életkortól függetlenül azonos kiadásváltozást jelent…?</p></li>
+<li><p>Használjunk a lineáris függvényforma helyett mást, például négyzeteset (parabolát):</p>
+<p><span class="math display">\[\frac{\partial}{\partial X_j}\left[\ldots+\beta_j X_j + \beta_{jj} X_j^2+\ldots\right]=\beta_j+2\beta_{jj} X_j\]</span></p></li>
 </ul>
 </div>
-<div id="a-változónkénti-linearitás-feloldása-egy-motiváló-példa-1" class="section level3" number="4.2.5">
-<h3><span class="header-section-number">4.2.5</span> A változónkénti linearitás feloldása: egy motiváló példa</h3>
+<div id="a-változónkénti-linearitás-feloldása-egy-motiváló-példa-1" class="section level3 hasAnchor" number="4.2.5">
+<h3><span class="header-section-number">4.2.5</span> A változónkénti linearitás feloldása: egy motiváló példa<a href="#a-v%C3%A1ltoz%C3%B3nk%C3%A9nti-linearit%C3%A1s-felold%C3%A1sa-egy-motiv%C3%A1l%C3%B3-p%C3%A9lda-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Szemléletesen az egy magyarázó változós esetben:</p>
-<p><img src="FerenciTamas_Okonometria_files/figure-html/unnamed-chunk-24-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="FerenciTamas_Okonometria_files/figure-html/unnamed-chunk-18-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Szélsőértékhely nyilvánvaló (első derivált előjelet vált): <span class="math inline">\(\beta_j+2\beta_{jj} X_j=0 \Rightarrow X_j=-\frac{\beta_j}{2\beta_{jj}}\)</span></p>
 </div>
-<div id="linearitás-mint-közelítés" class="section level3" number="4.2.6">
-<h3><span class="header-section-number">4.2.6</span> Linearitás, mint közelítés</h3>
+<div id="linearitás-mint-közelítés" class="section level3 hasAnchor" number="4.2.6">
+<h3><span class="header-section-number">4.2.6</span> Linearitás, mint közelítés<a href="#linearit%C3%A1s-mint-k%C3%B6zel%C3%ADt%C3%A9s" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Az élet általában nemlineáris</li>
 <li>Miért használunk mégis lineáris modelleket: mert sokszor nem térnek el (nagyon) a valóságtól, de mégis sokkal könnyebben kezelhetőek matematikailag</li>
 <li>Ez tehát az esetek többségében egy közelítés</li>
 <li>Mint ilyen: vizsgálni kell az érvényességi határokat</li>
-<li>,,Munkaponti linearizálás’’</li>
+<li><q>Munkaponti linearizálás</q></li>
 </ul>
-<p><img src="FerenciTamas_Okonometria_files/figure-html/unnamed-chunk-25-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p><img src="FerenciTamas_Okonometria_files/figure-html/unnamed-chunk-26-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p><img src="FerenciTamas_Okonometria_files/figure-html/unnamed-chunk-27-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="FerenciTamas_Okonometria_files/figure-html/unnamed-chunk-19-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="FerenciTamas_Okonometria_files/figure-html/unnamed-chunk-20-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="FerenciTamas_Okonometria_files/figure-html/unnamed-chunk-21-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
-<div id="érvényességi-határok" class="section level3" number="4.2.7">
-<h3><span class="header-section-number">4.2.7</span> Érvényességi határok</h3>
+<div id="érvényességi-határok" class="section level3 hasAnchor" number="4.2.7">
+<h3><span class="header-section-number">4.2.7</span> Érvényességi határok<a href="#%C3%A9rv%C3%A9nyess%C3%A9gi-hat%C3%A1rok" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Az érvényességi határokat az eddig látott modellekben is érdemes végiggondolni</li>
 <li>Azonnal kézenfekvő példa: a konstans (nagyon sok esetben)</li>
@@ -367,30 +366,30 @@ azonban felbontva a zárójelet:
 <li>Ez is egyfajta munkaponti linearizálás</li>
 </ul>
 </div>
-<div id="nemlinearitás-fajtái" class="section level3" number="4.2.8">
-<h3><span class="header-section-number">4.2.8</span> Nemlinearitás fajtái</h3>
+<div id="nemlinearitás-fajtái" class="section level3 hasAnchor" number="4.2.8">
+<h3><span class="header-section-number">4.2.8</span> Nemlinearitás fajtái<a href="#nemlinearit%C3%A1s-fajt%C3%A1i" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Az <span class="math inline">\(\beta_1+\beta_2 X+\beta_3 X^2\)</span> egy nemlineáris kifejezés (matematikailag)</li>
 <li>De figyelem: ennek ellenére minden további nélkül, tökéletesen kezelhető pusztán az eddig látott (lineáris!) eszköztárral, hiszen az OLS-nek mindegy, hogy a második magyarázó változó értékei történetesen épp az első négyzetei</li>
 <li>(Egészen addig nincs baj, amíg a kapcsolat nem lineáris)</li>
-<li>Nem úgy mint az <span class="math inline">\(\beta_1 X^{\beta_2}\)</span> <span class="math inline">\(\rightarrow\)</span> ez nem becsülhető OLS-sel</li>
+<li>Nem úgy mint a <span class="math inline">\(\beta_1 X^{\beta_2}\)</span> <span class="math inline">\(\rightarrow\)</span> ez nem becsülhető OLS-sel</li>
 <li>A megkülönböztetés végett az első esetet változójában, a másodikat paraméterében nemlineáris modellnek nevezzük</li>
-<li>Mi van ,,nemlinearitást okozó pozícióban’’</li>
+<li>Mi van <q>nemlinearitást okozó pozícióban</q></li>
 </ul>
 </div>
-<div id="változójában-nemlineáris-modell" class="section level3" number="4.2.9">
-<h3><span class="header-section-number">4.2.9</span> Változójában nemlineáris modell</h3>
+<div id="változójában-nemlineáris-modell" class="section level3 hasAnchor" number="4.2.9">
+<h3><span class="header-section-number">4.2.9</span> Változójában nemlineáris modell<a href="#v%C3%A1ltoz%C3%B3j%C3%A1ban-nemline%C3%A1ris-modell" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li>Jellemző: továbbra is fennáll a ,,változók konstansokkal szorozva majd összeadva’’ (tehát: lineáris kombinációs) struktúra</li>
-<li>De elképzelhető, hogy egy változó egy ,,eredeti’’ változó transzformáltja</li>
+<li>Jellemző: továbbra is fennáll a <q>változók konstansokkal szorozva majd összeadva</q> (tehát: lineáris kombinációs) struktúra</li>
+<li>De elképzelhető, hogy egy változó egy <q>eredeti</q> változó transzformáltja</li>
 <li>Itt szükségképp nemlineáris transzformációról beszélünk!</li>
-<li>Vegyük észre, hogy az ,,eredeti’’ és ,,transzformált’’ közti megkülönböztetés teljesen mesterséges (csak mi tudjuk, hogy mi volt az adatbázisban bemenő adatként), az OLS-nek mindegy</li>
+<li>Vegyük észre, hogy az <q>eredeti</q> és <q>transzformált</q> közti megkülönböztetés teljesen mesterséges (csak mi tudjuk, hogy mi volt az adatbázisban bemenő adatként), az OLS-nek mindegy</li>
 <li>Ide tartozik a kvadratikus hatás, általában az <span class="math inline">\(X^a\)</span> magyarázó változók, a <span class="math inline">\(\log_a X\)</span>, az <span class="math inline">\(a^X\)</span> stb., ahol <span class="math inline">\(a\)</span> konstans</li>
 <li>Az előzőek miatt a becslés ugyanaz, egyedül az interpretálás igényel további tárgyalást</li>
 </ul>
 </div>
-<div id="paramétereiben-nemlineáris-modell" class="section level3" number="4.2.10">
-<h3><span class="header-section-number">4.2.10</span> Paramétereiben nemlineáris modell</h3>
+<div id="paramétereiben-nemlineáris-modell" class="section level3 hasAnchor" number="4.2.10">
+<h3><span class="header-section-number">4.2.10</span> Paramétereiben nemlineáris modell<a href="#param%C3%A9tereiben-nemline%C3%A1ris-modell" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Megsérti a lineáris kombináció struktúráját: paraméter nem csak szorzóként szerepel a regresszióban</li>
 <li>Például <span class="math inline">\(X^{\beta}\)</span>, <span class="math inline">\(\log_{\beta} X\)</span> stb.</li>
@@ -398,18 +397,18 @@ azonban felbontva a zárójelet:
 <li>Más módszert fogunk használni</li>
 </ul>
 </div>
-<div id="interakció-és-kvadratikus-hatás-revisited" class="section level3" number="4.2.11">
-<h3><span class="header-section-number">4.2.11</span> Interakció és kvadratikus hatás revisited</h3>
+<div id="interakció-és-kvadratikus-hatás-revisited" class="section level3 hasAnchor" number="4.2.11">
+<h3><span class="header-section-number">4.2.11</span> Interakció és kvadratikus hatás revisited<a href="#interakci%C3%B3-%C3%A9s-kvadratikus-hat%C3%A1s-revisited" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Az előzőek fényében nyilvánvaló: a kvadratikus hatás egyfajta (igen egyszerű) változójában nemlineáris modell</li>
 <li>Az interakció szintén változóbeli nemlinearitás, de nem annyira kézenfekvő módon (mindenképp indokolt a külön tárgyalása)</li>
 </ul>
 </div>
-<div id="nemlinearitás-kezelése-nls" class="section level3" number="4.2.12">
-<h3><span class="header-section-number">4.2.12</span> Nemlinearitás kezelése: NLS</h3>
+<div id="nemlinearitás-kezelése-nls" class="section level3 hasAnchor" number="4.2.12">
+<h3><span class="header-section-number">4.2.12</span> Nemlinearitás kezelése: NLS<a href="#nemlinearit%C3%A1s-kezel%C3%A9se-nls" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Vegyük észre, hogy a <span class="math inline">\(\min_{\boldsymbol{\beta}} ESS\)</span> célfüggvény akkor is tartható, ha nemlineáris modellt specifikálunk!</li>
-<li>(Csak az ESS számításához szükséges <span class="math inline">\(\widehat{Y}\)</span>-ok másképp jönnek ki, de ez a fenti optimalizáció szempontjából )</li>
+<li>(Csak az ESS számításához szükséges <span class="math inline">\(\widehat{Y}\)</span>-ok másképp jönnek ki, de ez a fenti optimalizáció szempontjából <em>teljesen mindegy</em>)</li>
 <li>Oldjuk meg ezt az optimalizációs feladatot!</li>
 <li>Ez a nem-lineáris legkisebb négyzetek (NLS, non-linear least squares) módszere</li>
 <li>Sajnos mondani könnyebb, mint a gyakorlatban kivitelezni; szemben a lineáris specifikációval, a kritériumfelület nem kvadratikus, emiatt nincs egyetlen művelettel megtalálható optimum</li>
@@ -424,111 +423,105 @@ azonban felbontva a zárójelet:
 </ul></li>
 </ul>
 </div>
-<div id="nemlinearitás-kezelése-algebrai-linearizáció" class="section level3" number="4.2.13">
-<h3><span class="header-section-number">4.2.13</span> Nemlinearitás kezelése: algebrai linearizáció</h3>
+<div id="nemlinearitás-kezelése-algebrai-linearizáció" class="section level3 hasAnchor" number="4.2.13">
+<h3><span class="header-section-number">4.2.13</span> Nemlinearitás kezelése: algebrai linearizáció<a href="#nemlinearit%C3%A1s-kezel%C3%A9se-algebrai-lineariz%C3%A1ci%C3%B3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Mi a fenti (mindig alkalmazható) módszerrel szemben egy másik (könnyebb, de nem mindig alkalmazható) módszert fogunk vizsgálni: algebrai linearizálás</li>
 <li>Alkalmas transzformációval a nemlineáris problémát lineárissá alakítjuk, azt OLS-sel megoldjuk, majd a kapott eredményeket visszatranszformáljuk az eredeti transzformáció inverzével</li>
-<li>Például: <span class="math inline">\(Y=\beta_1 X^{\beta_2} \varepsilon\)</span> paramétereiben nemlineáris </li>
-<li> de mindkét oldal logaritmusát véve <span class="math inline">\(\log Y =\log \beta_1 + \beta_2 \log X + \varepsilon&#39;\)</span> már az!</li>
+<li>Például: <span class="math inline">\(Y=\beta_1 X^{\beta_2} \varepsilon\)</span> paramétereiben nemlineáris…</li>
+<li>…de mindkét oldal logaritmusát véve <span class="math inline">\(\log Y =\log \beta_1 + \beta_2 \log X + \varepsilon&#39;\)</span> már az!</li>
 <li>Adatbázis logaritmálása, eredmények visszahatványozása</li>
 <li>(Amint mondtuk, nem mindig alkalmazható, de azért nagyon sok, gyakorlatilag fontos esetben igen)</li>
 <li>Természetesen itt is eltérő, specifikus értelmezések jelenthetnek meg</li>
 </ul>
 </div>
 </div>
-<div id="néhány-nevezetes-paraméterében-nemlineáris-modell" class="section level2" number="4.3">
-<h2><span class="header-section-number">4.3</span> Néhány nevezetes, paraméterében nemlineáris modell</h2>
-<div id="log-log-modell" class="section level3" number="4.3.1">
-<h3><span class="header-section-number">4.3.1</span> Log-log modell</h3>
+<div id="néhány-nevezetes-paraméterében-nemlineáris-modell" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> Néhány nevezetes, paraméterében nemlineáris modell<a href="#n%C3%A9h%C3%A1ny-nevezetes-param%C3%A9ter%C3%A9ben-nemline%C3%A1ris-modell" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="log-log-modell" class="section level3 hasAnchor" number="4.3.1">
+<h3><span class="header-section-number">4.3.1</span> Log-log modell<a href="nemlineáris-modellek.html#log-log-modell" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li>Például a Cobb-Douglas termelési modell:
-<span class="math display">\[
-  Y=\beta_1 L^{\beta_L} K^{\beta_K}\varepsilon,
-\]</span>
-ahol <span class="math inline">\(Y\)</span> a kibocsátás, <span class="math inline">\(L\)</span> a munka, <span class="math inline">\(K\)</span> a tőke (ill. általában a termelési tényezők) felhasználása</li>
-<li>Elaszticitása:
-<span class="math display">\[
-  \mathrm{El}_L\left(L,K\right)=\frac{\frac{\dif Y}{Y}}{\frac{\dif L}{L}}=\od{Y}{L} \frac{L}{Y}=\beta_1 \beta_L L^{\beta_L-1} K^{\beta_K} \frac{L}{\beta_1 L^{\beta_L} K^{\beta_K}}=\beta_L
-\]</span></li>
-<li>Ezért nevezik  modellnek is</li>
-<li>Kezelése linearizálással: mindkét oldalt logaritmáljuk
-<span class="math display">\[
-  \log Y = \log \beta_1 + \beta_L \log L + \beta_K \log K + \varepsilon&#39;
-\]</span></li>
+<li>Például a Cobb-Douglas termelési modell:</li>
+</ul>
+<p><span class="math display">\[Y=\beta_1 L^{\beta_L} K^{\beta_K}\varepsilon,\]</span></p>
+<p>ahol <span class="math inline">\(Y\)</span> a kibocsátás, <span class="math inline">\(L\)</span> a munka, <span class="math inline">\(K\)</span> a tőke (ill. általában a termelési tényezők) felhasználása
+- Elaszticitása:</p>
+<p><span class="math display">\[\mathrm{El}_L\left(L,K\right)=\frac{\frac{\mathrm{d} Y}{Y}}{\frac{\mathrm{d} L}{L}}=\frac{\mathrm{d}Y}{\mathrm{d}L} \frac{L}{Y}=\beta_1 \beta_L L^{\beta_L-1} K^{\beta_K} \frac{L}{\beta_1 L^{\beta_L} K^{\beta_K}}=\beta_L\]</span></p>
+<ul>
+<li>Ezért nevezik <em>konstans elaszticitású</em> modellnek is</li>
+<li>Kezelése linearizálással: mindkét oldalt logaritmáljuk</li>
+</ul>
+<p><span class="math display">\[\log Y = \log \beta_1 + \beta_L \log L + \beta_K \log K + \varepsilon&#39;\]</span></p>
+<ul>
 <li>Minden változót (eredmény és összes magyarázó is) logaritmálni kell</li>
 <li>Innen a modell neve</li>
-<li>Csak a konstans lesz logaritmálva, a többi koefficienst a transzformáció ellenére (ill. épp azért) közvetlenül kapjuk</li>
+<li>Csak a konstans lesz logaritmálva, a többi koefficienst a transzformáció ellenére (ill. épp azért…) közvetlenül kapjuk</li>
 <li>Volumenhozadék (skálahozadék): <span class="math inline">\(\beta_K + \beta_L\)</span> viszonya 1-hez</li>
 </ul>
 </div>
-<div id="log-lin-modell" class="section level3" number="4.3.2">
-<h3><span class="header-section-number">4.3.2</span> Log-lin modell</h3>
+<div id="log-lin-modell" class="section level3 hasAnchor" number="4.3.2">
+<h3><span class="header-section-number">4.3.2</span> Log-lin modell<a href="nemlineáris-modellek.html#log-lin-modell" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li>Például a jövedelem alakulása:
-<span class="math display">\[
-  Y=e^{\beta_1 + \beta_2 X + \varepsilon}
-\]</span></li>
-<li>Linearizálás ismét mindkét oldal logaritmálásával:
-<span class="math display">\[
-  \log Y = \beta_1 + \beta_2 X + \varepsilon
-\]</span></li>
+<li>Például a jövedelem alakulása:</li>
+</ul>
+<p><span class="math display">\[Y=e^{\beta_1 + \beta_2 X + \varepsilon}\]</span></p>
+<ul>
+<li>Linearizálás ismét mindkét oldal logaritmálásával:</li>
+</ul>
+<p><span class="math display">\[\log Y = \beta_1 + \beta_2 X + \varepsilon\]</span></p>
+<ul>
 <li>Elnevezés logikája így már látható: az eredményváltozó logaritmálva, de a magyarázó változók maradnak szintben</li>
-<li>Növekedési ráta: <span class="math inline">\(e^{\beta_1 + \beta_2 \left(X+1\right) + u}=Ye^{\beta_2}\)</span>, pillanatnyi növekedési ütem: <span class="math inline">\(\beta_2=\od{\log Y}{X}=\frac{1}{Y} \od{Y}{X}\)</span></li>
-<li>Elaszticitás: <span class="math inline">\(\mathrm{El}_X\left(X\right)=\od{Y}{X} \frac{X}{Y} = \beta_2 X\)</span>, tehát csak <span class="math inline">\(X\)</span>-től függ</li>
+<li>Növekedési ráta: <span class="math inline">\(e^{\beta_1 + \beta_2 \left(X+1\right) + u}=Ye^{\beta_2}\)</span>, pillanatnyi növekedési ütem: <span class="math inline">\(\beta_2=\frac{\mathrm{d}\log Y}{\mathrm{d}X}=\frac{1}{Y} \frac{\mathrm{d}Y}{\mathrm{d}X}\)</span></li>
+<li>Elaszticitás: <span class="math inline">\(\mathrm{El}_X\left(X\right)=\frac{\mathrm{d}Y}{\mathrm{d}X} \frac{X}{Y} = \beta_2 X\)</span>, tehát csak <span class="math inline">\(X\)</span>-től függ</li>
 </ul>
 </div>
-<div id="lin-log-modell-kakukktojás" class="section level3" number="4.3.3">
-<h3><span class="header-section-number">4.3.3</span> Lin-log modell – kakukktojás!</h3>
+<div id="lin-log-modell-kakukktojás" class="section level3 hasAnchor" number="4.3.3">
+<h3><span class="header-section-number">4.3.3</span> Lin-log modell – kakukktojás!<a href="#lin-log-modell-kakukktoj%C3%A1s" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li>Az előzőek alapján már világos a jelentése (pl. terület és kínálati ár összefüggése):
-<span class="math display">\[
-  Y=\beta_1 + \beta_2 \log X + \varepsilon
-\]</span></li>
+<li>Az előzőek alapján már világos a jelentése (pl. terület és kínálati ár összefüggése):</li>
+</ul>
+<p><span class="math display">\[Y=\beta_1 + \beta_2 \log X + \varepsilon\]</span></p>
+<ul>
 <li>Miért kakukktojás?</li>
-<li><span class="math inline">\(\beta_2\)</span> értelmezése:
-<span class="math display">\[
-  \od{Y}{X}=\frac{\beta_2}{X} \Rightarrow \beta_2=\frac{\dif Y}{\dif X / X}
-\]</span></li>
-<li>Elaszticitás:
-<span class="math display">\[
-  \mathrm{El}_X\left(X\right)=\frac{\beta_2}{X}\frac{X}{Y}=\frac{\beta_2}{Y},
-\]</span>
-tehát csak <span class="math inline">\(Y\)</span>-től függ (közvetlenül)</li>
+<li><span class="math inline">\(\beta_2\)</span> értelmezése:</li>
 </ul>
-<p>A ,,közvetlenül’’ itt arra utal, hogy természetesen az <span class="math inline">\(Y\)</span> helyébe beírható lenne a – csak <span class="math inline">\(X\)</span>-eket tartalmazó – felírása.</p>
-</div>
-<div id="reciprok-modell-kakukktojás" class="section level3" number="4.3.4">
-<h3><span class="header-section-number">4.3.4</span> Reciprok modell – kakukktojás</h3>
+<p><span class="math display">\[\frac{\mathrm{d}Y}{\mathrm{d}X}=\frac{\beta_2}{X} \Rightarrow \beta_2=\frac{\mathrm{d} Y}{\mathrm{d} X / X}\]</span></p>
 <ul>
-<li>Például keresleti modell:
-<span class="math display">\[
-  Y=\beta_1 + \frac{\beta_2}{X}+\varepsilon
-\]</span></li>
+<li>Elaszticitás:</li>
+</ul>
+<p><span class="math display">\[\mathrm{El}_X\left(X\right)=\frac{\beta_2}{X}\frac{X}{Y}=\frac{\beta_2}{Y},\]</span></p>
+<p>tehát csak <span class="math inline">\(Y\)</span>-től függ (közvetlenül)</p>
+<p>A <q>közvetlenül</q> itt arra utal, hogy természetesen az <span class="math inline">\(Y\)</span> helyébe beírható lenne a – csak <span class="math inline">\(X\)</span>-eket tartalmazó – felírása.</p>
+</div>
+<div id="reciprok-modell-kakukktojás" class="section level3 hasAnchor" number="4.3.4">
+<h3><span class="header-section-number">4.3.4</span> Reciprok modell – kakukktojás<a href="#reciprok-modell-kakukktoj%C3%A1s" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li>Például keresleti modell:</li>
+</ul>
+<p><span class="math display">\[Y=\beta_1 + \frac{\beta_2}{X}+\varepsilon\]</span></p>
+<ul>
 <li>Miért kakukktojás?</li>
 <li>Aszimptotikusan: <span class="math inline">\(\lim_{X\rightarrow\infty} \mathbb{E}\left(Y\mid X\right) = \beta_1\)</span></li>
-<li>Határkiadás: <span class="math inline">\(\od{Y}{X}=-\frac{\beta_2}{X^2}\)</span></li>
-<li>Elaszticitás:
-<span class="math display">\[
-  \mathrm{El}_X\left(X\right)=-\frac{\beta_2}{X^2}\frac{X}{Y}=\frac{\beta_2}{XY}
-\]</span></li>
-<li>Paraméterek értelmezése, <span class="math inline">\(\beta_2\)</span> előjelének jelentősége az ,,aszimptotikus’’ viselkedés szempontjából: az élvezeti cikkek példája</li>
+<li>Határkiadás: <span class="math inline">\(\frac{\mathrm{d}Y}{\mathrm{d}X}=-\frac{\beta_2}{X^2}\)</span></li>
+<li>Elaszticitás:</li>
+</ul>
+<p><span class="math display">\[\mathrm{El}_X\left(X\right)=-\frac{\beta_2}{X^2}\frac{X}{Y}=\frac{\beta_2}{XY}\]</span></p>
+<ul>
+<li>Paraméterek értelmezése, <span class="math inline">\(\beta_2\)</span> előjelének jelentősége az <q>aszimptotikus</q> viselkedés szempontjából: az élvezeti cikkek példája</li>
 </ul>
 </div>
-<div id="egy-komplex-példa-vegyes-modellre" class="section level3" number="4.3.5">
-<h3><span class="header-section-number">4.3.5</span> Egy komplex példa vegyes modellre</h3>
+<div id="egy-komplex-példa-vegyes-modellre" class="section level3 hasAnchor" number="4.3.5">
+<h3><span class="header-section-number">4.3.5</span> Egy komplex példa vegyes modellre<a href="#egy-komplex-p%C3%A9lda-vegyes-modellre" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li>Tekintsük a következő kiadási modellt:
-<span class="math display">\[
-Y=\beta_1 e^{\beta_N N} J^{\beta_J+\beta_{JN} N} \varepsilon,
-\]</span>
-ahol <span class="math inline">\(Y\)</span> a kiadás, <span class="math inline">\(N\)</span> a nem (dummy, 1 ha férfi), <span class="math inline">\(J\)</span> a jövedelem</li>
-<li>Alapvetően log-log jellegű (bár a <span class="math inline">\(\beta_N\)</span> felfogható exponenciálisként is), ráadásul még dummyzva is, hogy minden eltérő legyen nemenként (strukturális törés)</li>
-<li>Ez utóbbi miatt mondhatjuk egyszerűen, hogy log-log jellegű</li>
-<li>Linearizálás:
-<span class="math display">\[
-  \log Y = \log \beta_2 + \beta_N N + \beta_J J + \beta_{JN} \left(J\cdot N\right)+ \varepsilon&#39;
-\]</span></li>
+<li>Tekintsük a következő kiadási modellt:</li>
+</ul>
+<p><span class="math display">\[Y=\beta_1 e^{\beta_N N} J^{\beta_J+\beta_{JN} N} \varepsilon,\]</span></p>
+<p>ahol <span class="math inline">\(Y\)</span> a kiadás, <span class="math inline">\(N\)</span> a nem (dummy, 1 ha férfi), <span class="math inline">\(J\)</span> a jövedelem
+- Alapvetően log-log jellegű (bár a <span class="math inline">\(\beta_N\)</span> felfogható exponenciálisként is), ráadásul még dummyzva is, hogy minden eltérő legyen nemenként (strukturális törés)
+- Ez utóbbi miatt mondhatjuk egyszerűen, hogy log-log jellegű
+- Linearizálás:</p>
+<p><span class="math display">\[\log Y = \log \beta_2 + \beta_N N + \beta_J J + \beta_{JN} \left(J\cdot N\right)+ \varepsilon&#39;\]</span></p>
+<ul>
 <li>Paraméterértelmezések:
 <ul>
 <li><span class="math inline">\(\beta_1\)</span> és <span class="math inline">\(\beta_N\)</span> <span class="math inline">\(\rightarrow\)</span> autonóm fogyasztás <em>mindkét</em> nemre teljesen külön (exponenciális jelleg ebben)
@@ -539,38 +532,38 @@ ahol <span class="math inline">\(Y\)</span> a kiadás, <span class="math inline"
 </ul>
 </div>
 </div>
-<div id="specifikációs-tesztek" class="section level2" number="4.4">
-<h2><span class="header-section-number">4.4</span> Specifikációs tesztek</h2>
-<div id="a-specifikációs-tesztek" class="section level3" number="4.4.1">
-<h3><span class="header-section-number">4.4.1</span> A specifikációs tesztek</h3>
+<div id="specifikációs-tesztek" class="section level2 hasAnchor" number="4.4">
+<h2><span class="header-section-number">4.4</span> Specifikációs tesztek<a href="#specifik%C3%A1ci%C3%B3s-tesztek" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="a-specifikációs-tesztek" class="section level3 hasAnchor" number="4.4.1">
+<h3><span class="header-section-number">4.4.1</span> A specifikációs tesztek<a href="#a-specifik%C3%A1ci%C3%B3s-tesztek" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
 <li>Itt már nagyon erősen felmerül a kérdés: hogyan dönthetek a különféle függvényformák között?</li>
 <li>Ld. a termelési függvény példáját <span class="math inline">\(\rightarrow\)</span> megadható lineárisan és Cobb-Douglas jelleggel (eredmény nagyon nem mindegy)</li>
-<li>Hogyan lehet  dönteni?</li>
+<li>Hogyan lehet <em>analitikusan</em> dönteni?</li>
 <li>Az előző példára: BM-teszt, PE-teszt stb.</li>
 <li>Általánosságban (nem csak log/lin kérdésekre, mint az előzőek): ún. specifikációs tesztek</li>
 </ul>
 </div>
-<div id="egy-egyszerű-specifikációs-teszt" class="section level3" number="4.4.2">
-<h3><span class="header-section-number">4.4.2</span> Egy egyszerű specifikációs teszt</h3>
+<div id="egy-egyszerű-specifikációs-teszt" class="section level3 hasAnchor" number="4.4.2">
+<h3><span class="header-section-number">4.4.2</span> Egy egyszerű specifikációs teszt<a href="#egy-egyszer%C5%B1-specifik%C3%A1ci%C3%B3s-teszt" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li>Egy egyszerű ötlet: adjuk hozzá a magyarázó változókhoz a magyarázó változók valamilyen nemlineáris transzformáltját (tipikusan négyzeteiket vagy logaritmusaikat)</li>
-<li>és nézzük meg, hogy  szignifikánsak-e!</li>
+<li>Egy egyszerű ötlet: adjuk hozzá a magyarázó változókhoz a magyarázó változók valamilyen nemlineáris transzformáltját (tipikusan négyzeteiket vagy logaritmusaikat)…</li>
+<li>…és nézzük meg, hogy <em>együttesen</em> szignifikánsak-e!</li>
 <li>Ha igen, az specifikációs hibára utal</li>
 <li>(Tehát figyelem, ezt alapvetően nem arra használjuk, hogy arra következtessünk, hogy egy adott konkrét változó négyzetét vagy logaritmusát hozzá kell-e adni a függvényformához, hanem összességében nézzük őket, specifikációs tesztként)</li>
 <li>Hátrány: sok szabadságfokot használ el, és csak elég speciális alakú nemlinearitásokkal tesztel</li>
 </ul>
 </div>
-<div id="ramsey-reset-je" class="section level3" number="4.4.3">
-<h3><span class="header-section-number">4.4.3</span> Ramsey RESET-je</h3>
+<div id="ramsey-reset-je" class="section level3 hasAnchor" number="4.4.3">
+<h3><span class="header-section-number">4.4.3</span> Ramsey RESET-je<a href="nemlineáris-modellek.html#ramsey-reset-je" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li>A modellspecifikáció  tesztje; emiatt előnye: nem egy adott specifikációs kérdésre keres választ, hanem általában vizsgálja, hogy a specifikáció jó-e; hátránya, hogy ha nemleges választ ad, nem derül ki, hogy pontosan mi a specifikáció baja</li>
-<li>Trükk: új regressziót becsül, melynek eredményváltozója ugyanaz, de a magyarázó változókhoz hozzáadja az eredeti regresszió becsült eredményváltozójának magasabb hatványait (<span class="math inline">\(\widehat{Y}^3\)</span>-ig néha <span class="math inline">\(\widehat{Y}^4\)</span>-ig is):
-<span class="math display">\[
-  Y = \beta_0&#39;+\beta_1&#39; X_1 + \beta_2&#39; X_2 + \ldots + \beta_k&#39; X_k + \gamma_1 \widehat{Y}^2 + \gamma_2 \widehat{Y}^3 + \varepsilon&#39;
-\]</span></li>
+<li>A modellspecifikáció <em>általános</em> tesztje; emiatt előnye: nem egy adott specifikációs kérdésre keres választ, hanem általában vizsgálja, hogy a specifikáció jó-e; hátránya, hogy ha nemleges választ ad, nem derül ki, hogy pontosan mi a specifikáció baja</li>
+<li>Trükk: új regressziót becsül, melynek eredményváltozója ugyanaz, de a magyarázó változókhoz hozzáadja az eredeti regresszió becsült eredményváltozójának magasabb hatványait (<span class="math inline">\(\widehat{Y}^3\)</span>-ig néha <span class="math inline">\(\widehat{Y}^4\)</span>-ig is):</li>
+</ul>
+<p><span class="math display">\[Y = \beta_0&#39;+\beta_1&#39; X_1 + \beta_2&#39; X_2 + \ldots + \beta_k&#39; X_k + \gamma_1 \widehat{Y}^2 + \gamma_2 \widehat{Y}^3 + \varepsilon&#39;\]</span></p>
+<ul>
 <li>Amit tesztelni kell az előzőhöz hasonlóan: <span class="math inline">\(H_0: \gamma_1 = \gamma_2 = 0\)</span> (<span class="math inline">\(F\)</span>-próba és LM-próba is van, heteroszkedaszticitásra is robusztussá tehető)</li>
-<li>Ilyen módon takarékos a szabadsági fokokkal, csak 2-3-at használ el (a fenti trükkel ,,összesűríti’’ a magyarázó változókat), ráadásul általánosabb alakú nemlinearitások is beleférnek ebbe, mint a csak négyzetekkel/logaritmusokkal tesztelés</li>
+<li>Ilyen módon takarékos a szabadsági fokokkal, csak 2-3-at használ el (a fenti trükkel <q>összesűríti</q> a magyarázó változókat), ráadásul általánosabb alakú nemlinearitások is beleférnek ebbe, mint a csak négyzetekkel/logaritmusokkal tesztelés</li>
 <li>Specifikációs teszt, tehát kihagyott változó detektálására általában nem alkalmas</li>
 </ul>
 
@@ -619,7 +612,6 @@ alt="ingyen webstatisztika"></a></div></noscript>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -630,37 +622,42 @@ alt="ingyen webstatisztika"></a></div></noscript>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": {
-"github": false,
-"facebook": true,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": "https://github.com/tamas-ferenci/FerenciTamas_Okonometria/edit/master/04-nemlinearismodellek.Rmd",
-"text": "Szerkesztés"
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": ["FerenciTamas_Okonometria.pdf", "FerenciTamas_Okonometria.epub"],
-"toc": {
-"collapse": "subsection"
-}
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/tamas-ferenci/FerenciTamas_Okonometria/edit/master/04-nemlinearismodellek.Rmd",
+    "text": "Szerkesztés"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["FerenciTamas_Okonometria.pdf", "FerenciTamas_Okonometria.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
 });
 });
 </script>
@@ -671,7 +668,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

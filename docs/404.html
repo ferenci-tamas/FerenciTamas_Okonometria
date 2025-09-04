@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="hu" xml:lang="hu">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Page not found | Ökonometria</title>
+  <meta name="description" content="Az ökonometria a társadalmi-gazdasági jelenségek kvantitatív, empirikus vizsgálatának, modellezésének tudománya. A jegyzet ezt tárgyalja, kerülve a mély matematikai részleteket, a hangsúlyt inkább a módszerek sokféleségének bemutatására helyezve. A számításokat mindenhol R statisztikai környezet alatt szemlélti." />
+  <meta name="generator" content="bookdown 0.44 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Page not found | Ökonometria" />
+  <meta property="og:type" content="book" />
+  <meta property="og:image" content="https://tamas-ferenci.github.io/FerenciTamas_Okonometria/FerenciTamas_Okonometria_cover.png" />
+  <meta property="og:description" content="Az ökonometria a társadalmi-gazdasági jelenségek kvantitatív, empirikus vizsgálatának, modellezésének tudománya. A jegyzet ezt tárgyalja, kerülve a mély matematikai részleteket, a hangsúlyt inkább a módszerek sokféleségének bemutatására helyezve. A számításokat mindenhol R statisztikai környezet alatt szemlélti." />
+  <meta name="github-repo" content="tamas-ferenci/FerenciTamas_Okonometria" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Page not found | Ökonometria" />
+  
+  <meta name="twitter:description" content="Az ökonometria a társadalmi-gazdasági jelenségek kvantitatív, empirikus vizsgálatának, modellezésének tudománya. A jegyzet ezt tárgyalja, kerülve a mély matematikai részleteket, a hangsúlyt inkább a módszerek sokféleségének bemutatására helyezve. A számításokat mindenhol R statisztikai környezet alatt szemlélti." />
+  <meta name="twitter:image" content="https://tamas-ferenci.github.io/FerenciTamas_Okonometria/FerenciTamas_Okonometria_cover.png" />
+
+<meta name="author" content="Ferenci Tamás, " />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Ferenci Tamás: Ökonometria</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path=""><a href="#el%C5%91sz%C3%B3"><i class="fa fa-check"></i>Előszó</a></li>
+<li class="chapter" data-level="1" data-path=""><a href="#%C3%BAt-a-t%C3%B6bbv%C3%A1ltoz%C3%B3s-regresszi%C3%B3hoz"><i class="fa fa-check"></i><b>1</b> Út a többváltozós regresszióhoz</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path=""><a href="#t%C3%B6rt%C3%A9net%C3%BCnk-els%C5%91-sz%C3%A1la-n%C3%A9h%C3%A1ny-motiv%C3%A1l%C3%B3-p%C3%A9lda"><i class="fa fa-check"></i><b>1.1</b> Történetünk első szála: néhány motiváló példa</a>
+<ul>
+<li class="chapter" data-level="1.1.1" data-path=""><a href="#hogyan-hat-az-oszt%C3%A1lyl%C3%A9tsz%C3%A1m-a-tanul%C3%B3k-teljes%C3%ADtm%C3%A9ny%C3%A9re"><i class="fa fa-check"></i><b>1.1.1</b> Hogyan hat az osztálylétszám a tanulók teljesítményére?</a></li>
+<li class="chapter" data-level="1.1.2" data-path=""><a href="#cs%C3%B6kkenti-e-a-korrupci%C3%B3-m%C3%A9rt%C3%A9k%C3%A9t-a-n%C5%91k-r%C3%A9szv%C3%A9tele-a-politik%C3%A1ban"><i class="fa fa-check"></i><b>1.1.2</b> Csökkenti-e a korrupció mértékét a nők részvétele a politikában?</a></li>
+<li class="chapter" data-level="1.1.3" data-path=""><a href="#csalnak-e-az-orosz-v%C3%A1laszt%C3%A1sokon"><i class="fa fa-check"></i><b>1.1.3</b> Csalnak-e az orosz választásokon?</a></li>
+<li class="chapter" data-level="1.1.4" data-path=""><a href="#tov%C3%A1bbi-p%C3%A9ld%C3%A1k"><i class="fa fa-check"></i><b>1.1.4</b> További példák</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path=""><a href="#a-p%C3%A9ld%C3%A1k-tanuls%C3%A1gai-az-empirikus-adatok-elemz%C3%A9s%C3%A9nek-legnagyobb-probl%C3%A9m%C3%A1ja"><i class="fa fa-check"></i><b>1.2</b> A példák tanulságai: az empirikus adatok elemzésének legnagyobb problémája</a></li>
+<li class="chapter" data-level="1.3" data-path=""><a href="#a-confounding-megold%C3%A1sai-k%C3%ADs%C3%A9rlet-%C3%A9s-megfigyel%C3%A9s"><i class="fa fa-check"></i><b>1.3</b> A confounding megoldásai: kísérlet és megfigyelés</a></li>
+<li class="chapter" data-level="1.4" data-path=""><a href="#t%C3%B6rt%C3%A9net%C3%BCnk-m%C3%A1sodik-sz%C3%A1la-a-regresszi%C3%B3s-modellek"><i class="fa fa-check"></i><b>1.4</b> Történetünk második szála: a regressziós modellek</a></li>
+<li class="chapter" data-level="1.5" data-path=""><a href="#regresszi%C3%B3-a-sokas%C3%A1gban"><i class="fa fa-check"></i><b>1.5</b> Regresszió a sokaságban</a></li>
+<li class="chapter" data-level="1.6" data-path=""><a href="#a-sz%C3%A1lak-%C3%B6ssze%C3%A9rnek"><i class="fa fa-check"></i><b>1.6</b> A szálak összeérnek</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path=""><a href="#regresszi%C3%B3-a-mint%C3%A1ban-k%C3%B6vetkeztet%C3%A9s"><i class="fa fa-check"></i><b>2</b> Regresszió a mintában: következtetés</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path=""><a href="#a-hagyom%C3%A1nyos-legkisebb-n%C3%A9gyzetek-ols-elve"><i class="fa fa-check"></i><b>2.1</b> A hagyományos legkisebb négyzetek (OLS) elve</a></li>
+<li class="chapter" data-level="2.2" data-path=""><a href="#line%C3%A1ris-regresszi%C3%B3-becsl%C3%A9se-ols-elven"><i class="fa fa-check"></i><b>2.2</b> Lineáris regresszió becslése OLS-elven</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path=""><a href="#kategori%C3%A1lis-magyar%C3%A1z%C3%B3-v%C3%A1ltoz%C3%B3k"><i class="fa fa-check"></i><b>3</b> Kategoriális magyarázó változók</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path=""><a href="#regresszi%C3%B3-csak-min%C5%91s%C3%A9gi-v%C3%A1ltoz%C3%B3val-anova"><i class="fa fa-check"></i><b>3.1</b> Regresszió csak minőségi változóval (ANOVA)</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path=""><a href="#min%C5%91s%C3%A9gi-v%C3%A1ltoz%C3%B3k-a-regresszi%C3%B3ban"><i class="fa fa-check"></i><b>3.1.1</b> Minőségi változók a regresszióban</a></li>
+<li class="chapter" data-level="3.1.2" data-path=""><a href="#dummy-v%C3%A1ltoz%C3%B3-fogalma"><i class="fa fa-check"></i><b>3.1.2</b> Dummy változó fogalma</a></li>
+<li class="chapter" data-level="3.1.3" data-path=""><a href="#k%C3%B3dol%C3%A1s"><i class="fa fa-check"></i><b>3.1.3</b> Kódolás</a></li>
+<li class="chapter" data-level="3.1.4" data-path=""><a href="#referencia-k%C3%B3dol%C3%A1s"><i class="fa fa-check"></i><b>3.1.4</b> Referencia-kódolás</a></li>
+<li class="chapter" data-level="3.1.5" data-path=""><a href="#dummy-v%C3%A1ltoz%C3%B3-csapda"><i class="fa fa-check"></i><b>3.1.5</b> Dummy változó csapda</a></li>
+<li class="chapter" data-level="3.1.6" data-path=""><a href="#trivi%C3%A1lis-k%C3%B3dol%C3%A1s-konstans-n%C3%A9lk%C3%BCl"><i class="fa fa-check"></i><b>3.1.6</b> Triviális kódolás konstans nélkül</a></li>
+<li class="chapter" data-level="3.1.7" data-path=""><a href="#referencia-k%C3%B3dol%C3%A1s-konstanssal"><i class="fa fa-check"></i><b>3.1.7</b> Referencia-kódolás konstanssal</a></li>
+<li class="chapter" data-level="3.1.8" data-path=""><a href="#egy%C3%BCtthat%C3%B3k-%C3%A9rtelmez%C3%A9se-referencia-k%C3%B3dol%C3%A1sn%C3%A1l"><i class="fa fa-check"></i><b>3.1.8</b> Együtthatók értelmezése referencia-kódolásnál</a></li>
+<li class="chapter" data-level="3.1.9" data-path=""><a href="#fontos-hipot%C3%A9zisvizsg%C3%A1latok"><i class="fa fa-check"></i><b>3.1.9</b> Fontos hipotézisvizsgálatok</a></li>
+<li class="chapter" data-level="3.1.10" data-path=""><a href="#egyn%C3%A9l-t%C3%B6bb-kategori%C3%A1lis-magyar%C3%A1z%C3%B3-v%C3%A1ltoz%C3%B3"><i class="fa fa-check"></i><b>3.1.10</b> Egynél több kategoriális magyarázó változó</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path=""><a href="#regresszi%C3%B3-min%C5%91s%C3%A9gi-%C3%A9s-mennyis%C3%A9gi-magyar%C3%A1z%C3%B3-v%C3%A1ltoz%C3%B3val-ancova"><i class="fa fa-check"></i><b>3.2</b> Regresszió minőségi és mennyiségi magyarázó változóval (ANCOVA)</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path=""><a href="#dummyz%C3%A1s-folytonos-magyar%C3%A1z%C3%B3-v%C3%A1ltoz%C3%B3-jelenl%C3%A9te-mellett"><i class="fa fa-check"></i><b>3.2.1</b> Dummyzás folytonos magyarázó változó jelenléte mellett</a></li>
+<li class="chapter" data-level="3.2.2" data-path=""><a href="#elt%C3%A9r%C5%91-tengelymetszet"><i class="fa fa-check"></i><b>3.2.2</b> Eltérő tengelymetszet</a></li>
+<li class="chapter" data-level="3.2.3" data-path=""><a href="#elt%C3%A9r%C5%91-meredeks%C3%A9g"><i class="fa fa-check"></i><b>3.2.3</b> Eltérő meredekség</a></li>
+<li class="chapter" data-level="3.2.4" data-path=""><a href="#elt%C3%A9r%C5%91-tengelymetszet-%C3%A9s-meredeks%C3%A9g"><i class="fa fa-check"></i><b>3.2.4</b> Eltérő tengelymetszet és meredekség</a></li>
+<li class="chapter" data-level="3.2.5" data-path=""><a href="#elt%C3%A9r%C5%91-tengelymetszet-%C3%A9s-meredeks%C3%A9g-1"><i class="fa fa-check"></i><b>3.2.5</b> Eltérő tengelymetszet és meredekség</a></li>
+<li class="chapter" data-level="3.2.6" data-path=""><a href="#hipot%C3%A9zisvizsg%C3%A1lat-a-dummyzott-modellben"><i class="fa fa-check"></i><b>3.2.6</b> Hipotézisvizsgálat a dummyzott modellben</a></li>
+<li class="chapter" data-level="3.2.7" data-path=""><a href="#kontraszt-k%C3%B3dol%C3%A1s"><i class="fa fa-check"></i><b>3.2.7</b> Kontraszt-kódolás</a></li>
+<li class="chapter" data-level="3.2.8" data-path=""><a href="#egy-terminol%C3%B3giai-megjegyz%C3%A9s"><i class="fa fa-check"></i><b>3.2.8</b> Egy terminológiai megjegyzés</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path=""><a href="#nemline%C3%A1ris-modellek"><i class="fa fa-check"></i><b>4</b> Nemlineáris modellek</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path=""><a href="#el%C3%B6lj%C3%A1r%C3%B3ban-a-margin%C3%A1lis-hat%C3%A1s-%C3%A1ltal%C3%A1nosabb-%C3%A9rtelmez%C3%A9se"><i class="fa fa-check"></i><b>4.1</b> Elöljáróban: a marginális hatás általánosabb értelmezése</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path=""><a href="#a-margin%C3%A1lis-hat%C3%A1s-fogalma"><i class="fa fa-check"></i><b>4.1.1</b> A marginális hatás fogalma</a></li>
+<li class="chapter" data-level="4.1.2" data-path=""><a href="#a-margin%C3%A1lis-hat%C3%A1s-prec%C3%ADzebben"><i class="fa fa-check"></i><b>4.1.2</b> A marginális hatás precízebben</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path=""><a href="#a-linearit%C3%A1s-felold%C3%A1sa"><i class="fa fa-check"></i><b>4.2</b> A linearitás feloldása</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path=""><a href="#eml%C3%A9keztet%C5%91%C3%BCl-a-linearit%C3%A1s-k%C3%B6vetkezm%C3%A9nyei"><i class="fa fa-check"></i><b>4.2.1</b> Emlékeztetőül: a linearitás következményei</a></li>
+<li class="chapter" data-level="4.2.2" data-path=""><a href="#az-additivit%C3%A1s-felold%C3%A1sa-az-interakci%C3%B3"><i class="fa fa-check"></i><b>4.2.2</b> Az additivitás feloldása: az interakció</a></li>
+<li class="chapter" data-level="4.2.3" data-path=""><a href="#a-margin%C3%A1lis-hat%C3%A1s-interakci%C3%B3k-eset%C3%A9n"><i class="fa fa-check"></i><b>4.2.3</b> A marginális hatás interakciók esetén</a></li>
+<li class="chapter" data-level="4.2.4" data-path=""><a href="#a-v%C3%A1ltoz%C3%B3nk%C3%A9nti-linearit%C3%A1s-felold%C3%A1sa-egy-motiv%C3%A1l%C3%B3-p%C3%A9lda"><i class="fa fa-check"></i><b>4.2.4</b> A változónkénti linearitás feloldása: egy motiváló példa</a></li>
+<li class="chapter" data-level="4.2.5" data-path=""><a href="#a-v%C3%A1ltoz%C3%B3nk%C3%A9nti-linearit%C3%A1s-felold%C3%A1sa-egy-motiv%C3%A1l%C3%B3-p%C3%A9lda-1"><i class="fa fa-check"></i><b>4.2.5</b> A változónkénti linearitás feloldása: egy motiváló példa</a></li>
+<li class="chapter" data-level="4.2.6" data-path=""><a href="#linearit%C3%A1s-mint-k%C3%B6zel%C3%ADt%C3%A9s"><i class="fa fa-check"></i><b>4.2.6</b> Linearitás, mint közelítés</a></li>
+<li class="chapter" data-level="4.2.7" data-path=""><a href="#%C3%A9rv%C3%A9nyess%C3%A9gi-hat%C3%A1rok"><i class="fa fa-check"></i><b>4.2.7</b> Érvényességi határok</a></li>
+<li class="chapter" data-level="4.2.8" data-path=""><a href="#nemlinearit%C3%A1s-fajt%C3%A1i"><i class="fa fa-check"></i><b>4.2.8</b> Nemlinearitás fajtái</a></li>
+<li class="chapter" data-level="4.2.9" data-path=""><a href="#v%C3%A1ltoz%C3%B3j%C3%A1ban-nemline%C3%A1ris-modell"><i class="fa fa-check"></i><b>4.2.9</b> Változójában nemlineáris modell</a></li>
+<li class="chapter" data-level="4.2.10" data-path=""><a href="#param%C3%A9tereiben-nemline%C3%A1ris-modell"><i class="fa fa-check"></i><b>4.2.10</b> Paramétereiben nemlineáris modell</a></li>
+<li class="chapter" data-level="4.2.11" data-path=""><a href="#interakci%C3%B3-%C3%A9s-kvadratikus-hat%C3%A1s-revisited"><i class="fa fa-check"></i><b>4.2.11</b> Interakció és kvadratikus hatás revisited</a></li>
+<li class="chapter" data-level="4.2.12" data-path=""><a href="#nemlinearit%C3%A1s-kezel%C3%A9se-nls"><i class="fa fa-check"></i><b>4.2.12</b> Nemlinearitás kezelése: NLS</a></li>
+<li class="chapter" data-level="4.2.13" data-path=""><a href="#nemlinearit%C3%A1s-kezel%C3%A9se-algebrai-lineariz%C3%A1ci%C3%B3"><i class="fa fa-check"></i><b>4.2.13</b> Nemlinearitás kezelése: algebrai linearizáció</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path=""><a href="#n%C3%A9h%C3%A1ny-nevezetes-param%C3%A9ter%C3%A9ben-nemline%C3%A1ris-modell"><i class="fa fa-check"></i><b>4.3</b> Néhány nevezetes, paraméterében nemlineáris modell</a>
+<ul>
+<li class="chapter" data-level="4.3.1" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html"><i class="fa fa-check"></i><b>4.3.1</b> Log-log modell</a></li>
+<li class="chapter" data-level="4.3.2" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#log-lin-modell"><i class="fa fa-check"></i><b>4.3.2</b> Log-lin modell</a></li>
+<li class="chapter" data-level="4.3.3" data-path=""><a href="#lin-log-modell-kakukktoj%C3%A1s"><i class="fa fa-check"></i><b>4.3.3</b> Lin-log modell – kakukktojás!</a></li>
+<li class="chapter" data-level="4.3.4" data-path=""><a href="#reciprok-modell-kakukktoj%C3%A1s"><i class="fa fa-check"></i><b>4.3.4</b> Reciprok modell – kakukktojás</a></li>
+<li class="chapter" data-level="4.3.5" data-path=""><a href="#egy-komplex-p%C3%A9lda-vegyes-modellre"><i class="fa fa-check"></i><b>4.3.5</b> Egy komplex példa vegyes modellre</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path=""><a href="#specifik%C3%A1ci%C3%B3s-tesztek"><i class="fa fa-check"></i><b>4.4</b> Specifikációs tesztek</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path=""><a href="#a-specifik%C3%A1ci%C3%B3s-tesztek"><i class="fa fa-check"></i><b>4.4.1</b> A specifikációs tesztek</a></li>
+<li class="chapter" data-level="4.4.2" data-path=""><a href="#egy-egyszer%C5%B1-specifik%C3%A1ci%C3%B3s-teszt"><i class="fa fa-check"></i><b>4.4.2</b> Egy egyszerű specifikációs teszt</a></li>
+<li class="chapter" data-level="4.4.3" data-path="nemlineáris-modellek.html"><a href="nemlineáris-modellek.html#ramsey-reset-je"><i class="fa fa-check"></i><b>4.4.3</b> Ramsey RESET-je</a></li>
+</ul></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="http://www.medstat.hu/" target="blank">http://www.medstat.hu/</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Ökonometria</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="page-not-found" class="section level1">
+<h1>Page not found</h1>
+<p>The page you requested cannot be found (perhaps it was moved or renamed).</p>
+<p>You may want to try searching to find the page's new location, or use
+the table of contents to find the page you are looking for.</p>
+</div>
+<!-- Default Statcounter code for Physcon Research
+http://research.physcon.uni-obuda.hu/ -->
+<script type="text/javascript">
+var sc_project=11601191; 
+var sc_invisible=1; 
+var sc_security="5a06c22d"; 
+</script>
+<script type="text/javascript"
+src="https://www.statcounter.com/counter/counter.js"
+async></script>
+<noscript><div class="statcounter"><a title="ingyen
+webstatisztika" href="https://www.statcounter.hu/"
+target="_blank"><img class="statcounter"
+src="https://c.statcounter.com/11601191/0/5a06c22d/1/"
+alt="ingyen webstatisztika"></a></div></noscript>
+<!-- End of Statcounter Code -->
+            </section>
+
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/tamas-ferenci/FerenciTamas_Okonometria/edit/master/%s",
+    "text": "Szerkesztés"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["FerenciTamas_Okonometria.pdf", "FerenciTamas_Okonometria.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
