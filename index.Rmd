@@ -30,4 +30,4 @@ Manapság ökonometria elképzelhetetlen számítógépes támogatás nélkül. 
 
 A jegyzettel kapcsolatban minden visszajelzést, véleményt, kritikát a lehető legnagyobb örömmel veszek a [tamas.ferenci@medstat.hu](tamas.ferenci@medstat.hu) email-címen!
 
-A jegyzet weboldala (oktatási segédanyagokkal, technikai információkkal) a [https://github.com/ferenci-tamas/FerenciTamas_Okonometria](https://github.com/tamas-ferenci/FerenciTamas_Okonometria) címen érhető el.
+A jegyzet weboldala (oktatási segédanyagokkal, technikai információkkal) a [https://github.com/ferenci-tamas/FerenciTamas_Okonometria](https://github.com/ferenci-tamas/FerenciTamas_Okonometria) címen érhető el.
